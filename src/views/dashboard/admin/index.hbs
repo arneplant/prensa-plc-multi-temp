@@ -1,0 +1,154 @@
+<div id="pagina-4" class="pagina-4">
+    {{> menu-admin}}
+
+    <table style="width:100%">
+        <tr>
+            <th><span class="cabecera-columna"></span></th>
+            <th><span class="cabecera-columna">Press 1.1</span></th>
+            <th><span class="cabecera-columna">Press 1.2</span></th>
+            <th><span class="cabecera-columna">Press 2.1</span></th>
+            <th><span class="cabecera-columna">Press 2.2</span></th>
+        </tr>
+        <tr style="border:solid white">
+            <td><span class="cabecera-fila">Temperature</span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Temperature_1" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Temperature_2" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Temperature_3" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Temperature_4" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+        </tr>
+
+        <tr style="border:solid white">
+            <td><span class="cabecera-fila">Open Press</span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Open_Press_1" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Open_Press_2" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Open_Press_3" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Open_Press_4" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+        </tr>
+
+        <tr style="border:solid white">
+            <td><span class="cabecera-fila">Close Press</span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Close_Press_1" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Close_Press_2" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Close_Press_3" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Close_Press_4" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+        </tr>
+
+        <tr style="border:solid white">
+            <td><span class="cabecera-fila">Action Button</span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="ActionButton_1" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="ActionButton_2" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="ActionButton_3" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="ActionButton_4" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+        </tr>
+
+        <tr style="border:solid white">
+            <td><span class="cabecera-fila">Emergency Button</span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="EmergencyButton_1" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="EmergencyButton_2" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="EmergencyButton_3" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="EmergencyButton_4" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+        </tr>
+
+        <tr style="border:solid white">
+            <td><span class="cabecera-fila">Photoelectric Barrier</span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Photoelectric_1" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Photoelectric_2" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Photoelectric_3" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+            <td><span style="color: greenyellow;">
+                    <i id="Photoelectric_4" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
+                </span></td>
+        </tr>
+
+    </table>
+</div>
+
+<script>
+    setInterval(() => {
+        $.ajax({
+            type: "POST",
+            url: "/plc/leer_leds",
+            success: (data) => {
+                pintar_leds(data)
+            },
+            error: (xhr) => {
+                console.log(xhr)
+            }
+        })
+    }, 200)
+
+    let relacion = {
+        led_emergencia: 'EmergencyButton_',
+        led_temp: 'Temperature_',
+        led_accion: 'ActionButton_',
+        led_barrera: 'Photoelectric_',
+        led_abrir: 'Close_Press_',
+        led_cerrar: 'Open_Press_',
+    }
+
+    let EmergencyButton_1 = document.getElementById('EmergencyButton_1')
+
+    function pintar_leds(data) {
+        for (let dato of data) {
+            let cabecera_boton = relacion[dato.name]
+            for (let i = 1; i <= 4; i++) {
+                let boton = document.getElementById(cabecera_boton + (i))
+                if (boton != null) {
+                    if (dato['valor_' + i] == 1) {
+                        boton.className = boton.className.replace("fa-circle-o ", "fa-circle ")
+                    }
+                    else {
+                        boton.className = boton.className.replace("fa-circle ", "fa-circle-o ")
+
+                    }
+                }
+
+            }
+        }
+    }
+</script>

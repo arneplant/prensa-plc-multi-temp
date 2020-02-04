@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script>document.addEventListener("DOMContentLoaded", function (event) {
+      asignar_funcionalidad_calculadora()
+    });
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Oscar">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/calculadora.css">
+  <title>PLC</title>
+</head>
+
+<body>
+  <div class="grid-container">
+    <div class="contenedor-principal">
+      {{{body}}}
+    </div>
+
+  </div>
+
+  <div id="modalCalculadora" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="max-height: 0px ;">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="calculator" style="max-height: 100px ;">
+            <input id='pantalla' type="text" class="calculator-screen" value="0" disabled />
+            <div class="calculator-keys">
+              <button id="btn7" type="button" class="btn btn-primary btn-calculadora" value="7">
+                <span class="numero-calculadora">7</span>
+              </button>
+              <button id="btn8" type="button" class="btn btn-primary btn-calculadora" value="8">
+                <span class="numero-calculadora">8</span>
+              </button>
+              <button id="btn9" type="button" class="btn btn-primary btn-calculadora" value="9">
+                <span class="numero-calculadora">9</span>
+              </button>
+              <button id="btnClearSingle" type="button" class="btn btn-danger" value="clear-single">
+                <span class="numero-calculadora">&#60;</span>
+              </button>
+              <button id="btn4" type="button" class="btn btn-primary btn-calculadora" value="4">
+                <span class="numero-calculadora">4</span>
+              </button id="btnClearSingle">
+              <button id="btn5" type="button" class="btn btn-primary btn-calculadora" value="5">
+                <span class="numero-calculadora">5</span>
+              </button>
+              <button id="btn6" type="button" class="btn btn-primary btn-calculadora" value="6">
+                <span class="numero-calculadora">6</span>
+              </button>
+              <button id="btnClearAll" type="button" class="btn btn-danger btn-calculadora" value="Clr">
+                <span class="numero-calculadora">CLR</span>
+              </button>
+              <button id="btn1" type="button" class="btn btn-primary btn-calculadora" value="1">
+                <span class="numero-calculadora">1</span>
+              </button>
+              <button id="btn2" type="button" class="btn btn-primary btn-calculadora" value="2">
+                <span class="numero-calculadora">2</span>
+              </button>
+              <button id="btn3" type="button" class="btn btn-primary btn-calculadora" value="3">
+                <span class="numero-calculadora">3</span>
+              </button>
+              <button id="btnEsc" type="button" class="btn btn-danger btn-calculadora" value="ESC">
+                <span class="numero-calculadora">ESC</span>
+              </button>
+              <button id="btnDot" type="button" class="btn btn-primary btn-calculadora" value=".">
+                <span class="numero-calculadora">.</span>
+              </button>
+              <button id="btn0" type="button" class="btn btn-primary btn-calculadora" value="0">
+                <span class="numero-calculadora">0</span>
+              </button>
+              <button id="btnEnter" type="button" class="btn btn-primary btn-calculadora btn-enter" value="enter">
+                <span class="numero-calculadora">ENTER</span>
+              </button>
+              <!--button type="button" class="equal-sign btn-calculadora" value="=">=</!--button-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/long-press.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/calculadora.js"></script>
+
+</html>

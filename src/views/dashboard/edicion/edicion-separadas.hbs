@@ -1,0 +1,156 @@
+<div id="pagina-2" class="pagina-2">
+    {{> menu-edicion}}
+
+    {{#if (gt prensas.length 1)}}
+    <div id="prensas-juntas" class="prensas-separadas">
+        {{else}}
+        <div id="prensas-juntas" class="prensas-juntas">
+            {{/if}}
+            {{#each prensas}}
+            <div id="prensa{{this.id}}" class="prensa">
+                <button id="btnEstado{{this.id}}" class="btn btn-danger btn-personalizado"
+                    onclick="encender({{this.id}})">
+                    <span class='fuente-grande'>{{this.alias}}</span>
+                    <span id="edicion_campo_EstadoPrensa{{this.id}}" class='fuente-grande'></span>
+                </button>
+
+                <div class="dos-botones-horizontal">
+                    <button id="btnUtil1{{this.id}}" class="btn btn-danger btn-personalizado"
+                        onclick="mostrar_calculadora(btnUtil1{{this.id}})">
+                        <span id="edicion_campo_TempActual{{this.id}}" class='fuente-grande'>-1</span><span
+                            class='fuente-grande'>º</span>
+                    </button>
+                    <button id="btnUtil2{{this.id}}" class="btn btn-danger btn-personalizado"
+                        onclick="mostrar_calculadora(btnUtil2{{this.id}})">
+                        <span id="edicion_campo_TiempoActual{{this.id}}" class='fuente-grande'>-1</span><span
+                            class='fuente-grande'>''</span>
+                    </button>
+                </div>
+
+                <div class="tres-botones-horizontal">
+                    <button id="btnModo0{{this.id}}" class="btn btn-secondary btn-personalizado"
+                        onclick="cambiar_modo(0,{{this.id}})">
+                        <span class='fuente-mediana'>NORMAL</span>
+                    </button>
+                    <button id="btnModo1{{this.id}}" class="btn btn-secondary btn-personalizado"
+                        onclick="cambiar_modo(1,{{this.id}})">
+                        <span class='fuente-mediana'>SETUP</span>
+                    </button> <button id="btnModo2{{this.id}}" class="btn btn-secondary btn-personalizado"
+                        onclick="cambiar_modo(2,{{this.id}})">
+                        <span class='fuente-mediana'>WARM</span>
+                    </button>
+                </div>
+            </div>
+            {{/each}}
+
+        </div>
+    </div>
+</div>
+
+<script>
+    setInterval(() => {
+        $.ajax({
+            type: "POST",
+            url: "/plc/leer_estado_prensas",
+            success: (data) => {
+                mostrar_datos(data)
+            },
+            error: (xhr) => {
+                console.log(xhr)
+            }
+        })
+    }, 200)
+
+    let relacion = {
+        encendida: 'edicion_campo_EstadoPrensa',
+        set_temperatura: 'edicion_campo_TempActual',
+        set_segundos_ciclo: 'edicion_campo_TiempoActual',
+    }
+
+    let botones_pintar = ['btnEstado', 'btnUtil1', 'btnUtil2']
+    let botones_modo = ['btnModo0', 'btnModo1', 'btnModo2']
+
+    function mostrar_datos(data) {
+        for (let dato of data) {
+            for (let i = 1; i <= 4; i++) {
+                if (dato.name == 'modo') {
+                    for (let j = 0; j < botones_modo.length; j++) {
+                        let _btn_modo = document.getElementById(botones_modo[j] + i)
+                        if (_btn_modo != null) {
+                            if (dato['valor_' + i] == j) {
+                                _btn_modo.className = _btn_modo.className.replace('btn-secondary', 'btn-success')
+                            }
+                            else {
+                                _btn_modo.className = _btn_modo.className.replace('btn-success', 'btn-secondary')
+                            }
+                        }
+                    }
+                }
+                let element = document.getElementById(relacion[dato.name] + i)
+                if (element != null) {
+                    if (dato.name == "encendida") {
+                        if (dato['valor_' + i] == 1) {
+                            element.innerText = 'ON'
+                            for (let boton_pintar of botones_pintar) {
+                                let _boton_pintar = document.getElementById(boton_pintar + i)
+                                if (_boton_pintar != null) {
+                                    _boton_pintar.className = _boton_pintar.className.replace('btn-danger', 'btn-primary')
+                                }
+                            }
+                        }
+                        else {
+                            element.innerText = 'OFF'
+                            for (let boton_pintar of botones_pintar) {
+                                let _boton_pintar = document.getElementById(boton_pintar + i)
+                                if (_boton_pintar != null) {
+                                    _boton_pintar.className = _boton_pintar.className.replace('btn-primary', 'btn-danger')
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        element.innerText = dato['valor_' + i]
+                    }
+                }
+            }
+        }
+    }
+
+    function encender(id_prensa) {
+        $.ajax({
+            type: "POST",
+            url: "/plc/encender_apagar_prensa",
+            data: {
+                id: id_prensa,
+            },
+            success: (data) => {
+
+            },
+            error: (xhr) => {
+                console.log(xhr)
+            }
+        })
+    }
+
+    function cambiar_modo(modo, id_prensa) {
+        $.ajax({
+            type: "POST",
+            url: "/plc/cambiar_modo",
+            data: {
+                id: id_prensa,
+                modo: modo,
+            },
+            success: (data) => {
+
+            },
+            error: (xhr) => {
+                console.log(xhr)
+            }
+        })
+    }
+
+    function mostrar_calculadora(id_boton) {
+        $("#modalCalculadora").modal('show')
+        idBotonSolicitaNumero = id_boton
+    }
+</script>

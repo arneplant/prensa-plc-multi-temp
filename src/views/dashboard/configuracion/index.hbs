@@ -1,0 +1,75 @@
+<div id="pagina-3" class="pagina-3">
+    {{> menu-configuracion}}
+
+    <div id="parametros-prensas" class="parametros-prensas">
+        <div class="cinco-elementos-horizontal">
+            <span></span>
+            <span class="cabecera-columna">Press 1.1</span>
+            <span class="cabecera-columna">Press 1.2</span>
+            <span class="cabecera-columna">Press 2.1</span>
+            <span class="cabecera-columna">Press 2.2</span>
+        </div>
+
+        <div class="cabecera-y-tres-elementos-horizontal">
+            <span class="cabecera-fila">Upload</span>
+            <button id="btnMsSubida1" class="btn btn-primary btn-personalizado" onclick="mostrar_calculadora(btnMsSubida1)">
+                <span id="msSubida1" class='fuente-grande'>0</span><span class='fuente-grande'>ms.</span>
+            </button>
+            <button id="btnMsSubida3" class="btn btn-primary btn-personalizado" onclick="mostrar_calculadora(btnMsSubida3)">
+                <span id="msSubida3" class='fuente-grande'>0</span><span class='fuente-grande'>ms.</span>
+            </button>
+        </div>
+
+        <div class="cinco-elementos-horizontal">
+            <span class="cabecera-fila">Temp.Dev.</span>
+            <button id="btnMaxTempDesviacion1" class="btn btn-primary btn-personalizado" onclick="mostrar_calculadora(btnMaxTempDesviacion1)">
+                <span id="maxTempDesviacion1" class='fuente-grande'>0 </span><span class='fuente-grande'>%</span>
+            </button>
+            <button id="btnMaxTempDesviacion2" class="btn btn-primary btn-personalizado" onclick="mostrar_calculadora(btnMaxTempDesviacion2)">
+                <span id="maxTempDesviacion2" class='fuente-grande'>0 </span><span class='fuente-grande'>%</span>
+            </button>
+            <button id="btnMaxTempDesviacion3" class="btn btn-primary btn-personalizado" onclick="mostrar_calculadora(btnMaxTempDesviacion3)">
+                <span id="maxTempDesviacion3" class='fuente-grande'>0 </span><span class='fuente-grande'>%</span>
+            </button>
+            <button id="btnMaxTempDesviacion4" class="btn btn-primary btn-personalizado" onclick="mostrar_calculadora(btnMaxTempDesviacion4)">
+                <span id="maxTempDesviacion4" class='fuente-grande'>0 </span><span class='fuente-grande'>%</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    setInterval(() => {
+        $.ajax({
+            type: "POST",
+            url: "/plc/leer_config",
+            success: (data) => {
+                mostrar_datos(data)
+            },
+            error: (xhr) => {
+                console.log(xhr)
+            }
+        })
+    }, 200)
+
+    let relacion = {
+        desv_permitida: 'maxTempDesviacion',
+        ms_subida: 'msSubida'
+    }
+
+    function mostrar_datos(data) {
+        for (let dato of data) {
+            for (let i = 1; i <= 4; i++) {
+                let element = document.getElementById(relacion[dato.name] + i)
+                if (element != null) {
+                    element.innerText = dato['valor_' + i]
+                }
+            }
+        }
+    }
+
+    function mostrar_calculadora(id_boton) {
+        $("#modalCalculadora").modal('show')
+        idBotonSolicitaNumero = id_boton
+    }
+</script>

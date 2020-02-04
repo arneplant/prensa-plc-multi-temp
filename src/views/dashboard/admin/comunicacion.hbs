@@ -1,0 +1,99 @@
+<div id="pagina-4" class="pagina-4">
+    {{> menu-admin}}
+
+    <div id='parametros-comunicacion' class="parametros-comunicacion">
+        <div class="dos-botones-horizontal">
+            <button id="bloqueA" class="btn btn-danger btn-menu" onclick="cambiar_bloque(this,'A')">BLOCK A</button>
+            <button id="bloqueB" class="btn btn-danger btn-menu" onclick="cambiar_bloque(this,'B')">BLOCK B</button>
+        </div>
+
+        <div class="siete-elementos-horizontal">
+            <input id="ip1" class="input-ip" type="number" min="0" max="255" value="192" onmouseup="cambiar_ip()" />
+            <span class="punto-ip">.</span>
+            <input id="ip2" class="input-ip" type="number" min="0" max="255" value="168" onmouseup="cambiar_ip()" />
+            <span class="punto-ip">.</span>
+            <input id="ip3" class="input-ip" type="number" min="0" max="255" value="0" onmouseup="cambiar_ip()" />
+            <span class="punto-ip">.</span>
+            <input id="ip4" class="input-ip" type="number" min="0" max="255" value="1" onmouseup="cambiar_ip()" />
+        </div>
+    </div>
+</div>
+
+<script>
+    let ip1 = document.getElementById('ip1')
+    let ip2 = document.getElementById('ip2')
+    let ip3 = document.getElementById('ip3')
+    let ip4 = document.getElementById('ip4')
+    let bloqueB = document.getElementById('bloqueB')
+    let bloqueA = document.getElementById('bloqueA')
+    setInterval(() => {
+        $.ajax({
+            type: "POST",
+            url: "/config/leer_config",
+            success: (data) => {
+                mostrar_datos(data)
+            },
+            error: (xhr) => {
+                console.log(xhr)
+            }
+        })
+    }, 2000)
+
+    function mostrar_datos(data) {
+        let plc_ip = data['plc_ip']
+        let bloque = data['block']
+
+        if (bloque == 'A') {
+            bloqueA.className = bloqueA.className.replace('btn-danger', 'btn-success')
+            bloqueB.className = bloqueB.className.replace('btn-success', 'btn-danger')
+        }
+        else if (bloque == 'B') {
+            bloqueB.className = bloqueB.className.replace('btn-danger', 'btn-success')
+            bloqueA.className = bloqueA.className.replace('btn-success', 'btn-danger')
+        }
+
+        let ip_troceada = plc_ip = plc_ip.split('.')
+        if (ip_troceada.length == 4) {
+            ip1.value = ip_troceada[0]
+            ip2.value = ip_troceada[1]
+            ip3.value = ip_troceada[2]
+            ip4.value = ip_troceada[3]
+        }
+
+    }
+
+    function cambiar_ip() {
+        $.ajax({
+            type: "POST",
+            data: {
+                ip1: ip1.value,
+                ip2: ip2.value,
+                ip3: ip3.value,
+                ip4: ip4.value,
+            },
+            url: "/plc/config/cambiar_ip",
+            success: (data) => {
+
+            },
+            error: (xhr) => {
+                console.log(xhr)
+            }
+        })
+    }
+
+    function cambiar_bloque(boton, bloque) {
+        $.ajax({
+            type: "POST",
+            data: {
+                bloque: bloque
+            },
+            url: "/plc/config/cambiar_bloque",
+            success: (data) => {
+
+            },
+            error: (xhr) => {
+                console.log(xhr)
+            }
+        })
+    }
+</script>

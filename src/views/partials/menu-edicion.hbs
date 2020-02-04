@@ -1,0 +1,58 @@
+<div class="contenedor-menu">
+    <button class="btn btn-info btn-menu" onclick="window.location.href = '/dashboard';">
+        <i class="fa fa-home" aria-hidden="true"></i>
+    </button>
+    {{#if (gt prensas.length 1)}}
+    <button id="btnJuntar" class="btn btn-info btn-menu" onclick="juntar_prensas({{json prensas}})">
+        <i class="fa fa-link" aria-hidden="true"></i>
+    </button>
+    {{else}}
+    <button id="btnSeparar" class="btn btn-info btn-menu" onclick="separar_prensas({{json prensas}})">
+        <i class="fa fa-unlink" aria-hidden="true"></i>
+    </button>
+    {{/if}}
+    <button class="btn btn-info btn-menu" onclick="window.location.href = '/dashboard/configuracion';">
+        <i class="fa fa-cogs"></i>
+    </button>
+</div>
+
+<script>
+    function separar_prensas(prensas) {
+        console.log(prensas)
+        // aquí me viene 1 prensa
+        $.ajax({
+            type: "POST",
+            url: "/plc/separar_prensas",
+            data: {
+                id: prensas[0].id,
+            },
+            success: (data) => {
+                setInterval('location.reload()', 500);
+            },
+            error: (xhr) => {
+                console.log(xhr)
+                location.reload();
+            }
+        })
+        return false
+    }
+
+    function juntar_prensas(prensas) {
+        // aqui me vienen más de 1 prensa, cojo la primera
+        $.ajax({
+            type: "POST",
+            url: "/plc/juntar_prensas",
+            data: {
+                id1: prensas[0].id,
+                id2: prensas[1].id,
+            },
+            success: (data) => {
+                setInterval('location.reload()', 500);
+            },
+            error: (xhr) => {
+                console.log(xhr)
+                location.reload();
+            }
+        })
+    }
+</script>
