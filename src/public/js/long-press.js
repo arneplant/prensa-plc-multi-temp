@@ -21,10 +21,10 @@ function detectar_mouseup(e) {
 }
 
 
-function detectar_mousedown() {
+function detectar_mousedown(elemento) {
     isDown = true;                                    // button status (any button here)
     isLong = false;                                   // longpress status reset
-    target = this;                                    // store this as target element
+    target = elemento;                                    // store this as target element
     clearTimeout(longTID);                            // clear any running timers
     longTID = setTimeout(longPress.bind(this), 1500); // create a new timer for this click
 };
@@ -32,6 +32,25 @@ function detectar_mousedown() {
 
 function longPress() {
     isLong = true;
-    this.childNodes[0].innerText = '0'
+    let reemplazo = target.id.replace('botonCont','')
+    let prensa = reemplazo[1]
+    let contador = reemplazo[0]
+
+    $.ajax({
+        type: "POST",
+        url: "/plc/set_contador",
+        data:{
+            id: prensa,
+            valor: 0,
+            contador: contador,
+        },
+        success: (data) => {
+        },
+        error: (xhr) => {
+            console.log(xhr)
+        },
+                    timeout: 3000,
+    })
+
     // throw custom event or call code for long press
-  }
+}

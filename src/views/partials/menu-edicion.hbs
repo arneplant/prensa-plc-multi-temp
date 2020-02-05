@@ -32,7 +32,8 @@
             error: (xhr) => {
                 console.log(xhr)
                 location.reload();
-            }
+            },
+                        timeout: 3000,
         })
         return false
     }
@@ -51,8 +52,8 @@
             },
             error: (xhr) => {
                 console.log(xhr)
-                location.reload();
-            }
+            },
+                        timeout: 3000,
         })
     }
 </script>

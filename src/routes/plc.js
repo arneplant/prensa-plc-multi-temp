@@ -17,19 +17,19 @@ router.post('/encender_apagar_prensa', async (req, res) => {
     let nuevo_estado = estado_plc.encendida['valor_' + (req.body.id)] == 1 ? 'false' : 'true'
     try {
         await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.encendida['posicion_' + (req.body.id)], nuevo_estado)
+        res.status(202).send('ok')
     } catch (err) {
         res.status(500).send(err)
     }
-    res.status(202).send('ok')
 })
 
 router.post('/cambiar_modo', async (req, res) => {
     try {
         await s7.escribir_db_int(estado_plc.bloque_activo, estado_plc.modo['posicion_' + (req.body.id)], Number(req.body.modo))
+        res.status(202).send('ok')
     } catch (err) {
         res.status(500).send(err)
     }
-    res.status(202).send('ok')
 })
 
 router.post('/leer_estado_prensas', (req, res) => {
@@ -52,49 +52,60 @@ router.post('/separar_prensas', async (req, res) => {
 router.post('/set_seg_ciclo', async (req, res) => {
     try {
         await s7.escribir_db_int(estado_plc.bloque_activo, estado_plc.set_segundos_ciclo['posicion_' + (req.body.id)], Number(req.body.valor))
+        res.status(202).send('ok')
     } catch (err) {
         res.status(500).send(err)
     }
-    res.status(202).send('ok')
 })
 
 
 router.post('/set_temp_desviacion', async (req, res) => {
     try {
         await s7.escribir_db_int(estado_plc.bloque_activo, estado_plc.desv_permitida['posicion_' + (req.body.id)], Number(req.body.valor))
+        res.status(202).send('ok')
     } catch (err) {
         res.status(500).send(err)
     }
-    res.status(202).send('ok')
 })
 
 router.post('/set_ms_subida', async (req, res) => {
     try {
         await s7.escribir_db_int(estado_plc.bloque_activo, estado_plc.ms_subida['posicion_' + (req.body.id)], Number(req.body.valor))
+        res.status(202).send('ok')
     } catch (err) {
         res.status(500).send(err)
     }
-    res.status(202).send('ok')
 })
+
+router.post('/set_contador', async (req, res) => {
+    try {
+        await s7.escribir_db_long(estado_plc.bloque_activo, estado_plc['contador_'+req.body.contador]['posicion_' + (req.body.id)], Number(req.body.valor))
+        res.status(202).send('ok')
+    } catch (err) {
+        console.log(err)
+        res.status(500).send(err)
+    }
+})
+
 
 
 router.post('/set_temperatura', async (req, res) => {
     try {
         await s7.escribir_db_real(estado_plc.bloque_activo, estado_plc.set_temperatura['posicion_' + (req.body.id)], Number(req.body.valor))
+        res.status(202).send('ok')
     } catch (err) {
         res.status(500).send(err)
     }
-    res.status(202).send('ok')
 })
 
 router.post('/juntar_prensas', async (req, res) => {
     try {
         await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.unida['posicion_' + (req.body.id1)], 'true')
         await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.unida['posicion_' + (req.body.id2)], 'true')
+        res.status(202).send('ok')
     } catch (err) {
         res.status(500).send(err)
     }
-    res.status(202).send('ok')
 })
 router.post('/config/cambiar_ip', (req, res) => {
     config.cambiar_ip(req.body.ip1, req.body.ip2, req.body.ip3, req.body.ip4)

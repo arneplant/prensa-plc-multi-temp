@@ -17,13 +17,13 @@
             <span id="estados_campo_TiempoActual1" class='fuente-grande'>0</span>
             <span class='fuente-grande'>''</span>
         </button>
-        <button id="botonCont11" class="btn btn-estado btn-danger">
+        <button id="botonCont11" class="btn btn-estado btn-danger" onclick="triple_click(event)">
             <span id="estados_campo_Contador11" class='fuente-grande'>-1</span>
         </button>
-        <button id="botonCont21" class="btn btn-estado btn-danger">
+        <button id="botonCont21" class="btn btn-estado btn-danger" onclick="triple_click(event)">
             <span id="estados_campo_Contador21" class='fuente-grande'>-1</span>
         </button>
-        <button id="botonCont31" class="btn btn-estado btn-danger">
+        <button id="botonCont31" class="btn btn-estado btn-danger" onclick="triple_click(event)">
             <span id="estados_campo_Contador31" class='fuente-grande'>-1</span>
         </button>
     </div>
@@ -45,13 +45,13 @@
             <span id="estados_campo_TiempoActual2" class='fuente-grande'>0</span>
             <span class='fuente-grande'>''</span>
         </button>
-        <button id="botonCont12" class="btn btn-estado btn-danger">
+        <button id="botonCont12" class="btn btn-estado btn-danger" onclick="triple_click(event)">
             <span id="estados_campo_Contador12" class='fuente-grande'>-1</span>
         </button>
-        <button id="botonCont22" class="btn btn-estado btn-danger">
+        <button id="botonCont22" class="btn btn-estado btn-danger" onclick="triple_click(event)">
             <span id="estados_campo_Contador22" class='fuente-grande'>-1</span>
         </button>
-        <button id="botonCont32" class="btn btn-estado btn-danger">
+        <button id="botonCont32" class="btn btn-estado btn-danger" onclick="triple_click(event)">
             <span id="estados_campo_Contador32" class='fuente-grande'>-1</span>
         </button>
     </div>
@@ -73,13 +73,13 @@
             <span id="estados_campo_TiempoActual3" class='fuente-grande'>0</span>
             <span class='fuente-grande'>''</span>
         </button>
-        <button id="botonCont13" class="btn btn-estado btn-danger">
+        <button id="botonCont13" class="btn btn-estado btn-danger" onclick="triple_click(event)">
             <span id="estados_campo_Contador13" class='fuente-grande'>-1</span>
         </button>
-        <button id="botonCont23" class="btn btn-estado btn-danger">
+        <button id="botonCont23" class="btn btn-estado btn-danger" onclick="triple_click(event)">
             <span id="estados_campo_Contador23" class='fuente-grande'>-1</span>
         </button>
-        <button id="botonCont33" class="btn btn-estado btn-danger">
+        <button id="botonCont33" class="btn btn-estado btn-danger" onclick="triple_click(event)">
             <span id="estados_campo_Contador33" class='fuente-grande'>-1</span>
         </button>
     </div>
@@ -101,18 +101,19 @@
             <span id="estados_campo_TiempoActual4" class='fuente-grande'>0</span>
             <span class='fuente-grande'>''</span>
         </button>
-        <button id="botonCont14" class="btn btn-estado btn-danger">
+        <button id="botonCont14" class="btn btn-estado btn-danger" onclick="triple_click(event)">
             <span id="estados_campo_Contador14" class='fuente-grande'>-1</span>
         </button>
-        <button id="botonCont24" class="btn btn-estado btn-danger">
+        <button id="botonCont24" class="btn btn-estado btn-danger" onclick="triple_click(event)">
             <span id="estados_campo_Contador24" class='fuente-grande'>-1</span>
         </button>
-        <button id="botonCont34" class="btn btn-estado btn-danger">
+        <button id="botonCont34" class="btn btn-estado btn-danger" onclick="triple_click(event)">
             <span id="estados_campo_Contador34" class='fuente-grande'>-1</span>
         </button>
     </div>
 </div>
 
+<script src="/js/long-press.js"></script>
 <script>
     setInterval(() => {
         $.ajax({
@@ -123,11 +124,12 @@
             },
             error: (xhr) => {
                 console.log(xhr)
-            }
+            },
+            timeout: 3000,
         })
     }, 200)
 
-    let botones = ['botonTemp', 'botonTime','botonCont1','botonCont2','botonCont3']
+    let botones = ['botonTemp', 'botonTime', 'botonCont1', 'botonCont2', 'botonCont3']
 
     relacion = {
         temperatura_actual: 'estados_campo_TempActual',
@@ -160,6 +162,31 @@
                     element.innerText = dato['valor_' + i]
                 }
             }
+        }
+    }
+
+    function triple_click(e) {
+        e = e || window.event
+        if (e.detail === 3) {
+            let reemplazo = e.target.id.replace('botonCont', '')
+            let prensa = reemplazo[1]
+            let contador = reemplazo[0]
+
+            $.ajax({
+                type: "POST",
+                url: "/plc/set_contador",
+                data: {
+                    id: prensa,
+                    valor: 0,
+                    contador: contador,
+                },
+                success: (data) => {
+                },
+                error: (xhr) => {
+                    console.log(xhr)
+                },
+                timeout: 3000,
+            })
         }
     }
 </script>

@@ -27,8 +27,18 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
 
+app.use(session({
+    secret: 'supersecretpwddeoscarquetalestasyobieneeeaa',
+    resave: false,
+    saveUninitialized: false,
+}))
+
 app.use(validator());
 
+app.use((req,res,next)=>{
+    app.locals.info = req.info
+    next()
+})
 
 // routes
 app.use(require('./src/routes'))

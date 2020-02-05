@@ -54,7 +54,8 @@ function escribir_automata() {
                 },
                 error: (xhr) => {
                     console.log(xhr)
-                }
+                },
+                timeout:3000,
             })
             break
         case "btnUtil12": // set temperatura
@@ -70,7 +71,8 @@ function escribir_automata() {
                 },
                 error: (xhr) => {
                     console.log(xhr)
-                }
+                },
+                timeout:3000,
             })
             break
         case "btnUtil13": // set temperatura
@@ -86,7 +88,8 @@ function escribir_automata() {
                 },
                 error: (xhr) => {
                     console.log(xhr)
-                }
+                },
+                timeout:3000,
             })
             break
         case "btnUtil14": // set temperatura
@@ -102,7 +105,8 @@ function escribir_automata() {
                 },
                 error: (xhr) => {
                     console.log(xhr)
-                }
+                },
+                timeout:3000,
             })
             break
         case "btnUtil21": // set set seg ciclo
@@ -118,7 +122,8 @@ function escribir_automata() {
                 },
                 error: (xhr) => {
                     console.log(xhr)
-                }
+                },
+                timeout:3000,
             })
             break
         case "btnUtil22": // set seg ciclo
@@ -134,7 +139,8 @@ function escribir_automata() {
                 },
                 error: (xhr) => {
                     console.log(xhr)
-                }
+                },
+                timeout:3000,
             })
             break
         case "btnUtil23": // set seg ciclo
@@ -150,7 +156,8 @@ function escribir_automata() {
                 },
                 error: (xhr) => {
                     console.log(xhr)
-                }
+                },
+                timeout:3000,
             })
             break
         case "btnUtil24": // set seg ciclo
@@ -166,7 +173,8 @@ function escribir_automata() {
                 },
                 error: (xhr) => {
                     console.log(xhr)
-                }
+                },
+                timeout:3000,
             })
             break
 
