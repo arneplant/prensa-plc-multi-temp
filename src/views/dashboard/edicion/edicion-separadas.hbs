@@ -3,9 +3,9 @@
 
     {{#if (gt prensas.length 1)}}
     <div id="prensas-juntas" class="prensas-separadas">
-    {{else}}
+        {{else}}
         <div id="prensas-juntas" class="prensas-juntas">
-    {{/if}}
+            {{/if}}
             {{#each prensas}}
             <div id="prensa{{this.id}}" class="prensa">
                 <button id="btnEstado{{this.id}}" class="btn btn-danger btn-personalizado"

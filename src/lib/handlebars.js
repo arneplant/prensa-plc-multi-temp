@@ -9,6 +9,10 @@ hbsHelpers.gt = (a,b)=>{
   return a>b
 }
 
+hbsHelpers.eq = (a,b)=>{
+  return a===b
+}
+
 hbsHelpers.first= (lista)=>{
     if(lista.length>0){
         return lista[0]

@@ -28,11 +28,7 @@ router.post('/encender_apagar_prensa',check_encendido, async (req, res) => {
     let id_prensa = Number(req.body.id)
     let nuevo_estado = estado_plc.encendida['valor_' + id_prensa] == 1 ? 'false' : 'true'
     try {
-        if (estado_plc.unida['valor_' + id_prensa] == 1) {
-            if (id_prensa == 1 || id_prensa == 3) {
-                await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.encendida['posicion_' + (id_prensa + 1)], nuevo_estado)
-            }
-        }
+
         await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.encendida['posicion_' + id_prensa], nuevo_estado)
         res.status(202).send('ok')
     } catch (err) {
@@ -43,11 +39,7 @@ router.post('/encender_apagar_prensa',check_encendido, async (req, res) => {
 router.post('/cambiar_modo', check_encendido, async (req, res) => {
     let id_prensa = Number(req.body.id)
     try {
-        if (estado_plc.unida['valor_' + id_prensa] == 1) {
-            if (id_prensa == 1 || id_prensa == 3) {
-                await s7.escribir_db_int(estado_plc.bloque_activo, estado_plc.modo['posicion_' + (id_prensa + 1)], Number(req.body.modo))
-            }
-        }
+
         await s7.escribir_db_int(estado_plc.bloque_activo, estado_plc.modo['posicion_' + (req.body.id)], Number(req.body.modo))
         res.status(202).send('ok')
     } catch (err) {
@@ -81,11 +73,6 @@ router.post('/set_seg_ciclo',check_encendido, async (req, res) => {
     let id_prensa = Number(req.body.id)
 
     try {
-        if (estado_plc.unida['valor_' + id_prensa] == 1) {
-            if (id_prensa == 1 || id_prensa == 3) {
-                await s7.escribir_db_int(estado_plc.bloque_activo, estado_plc.set_segundos_ciclo['posicion_' + (id_prensa + 1)], Number(req.body.valor))
-            }
-        }
         await s7.escribir_db_int(estado_plc.bloque_activo, estado_plc.set_segundos_ciclo['posicion_' + (id_prensa)], Number(req.body.valor))
         res.status(202).send('ok')
     } catch (err) {
@@ -179,11 +166,7 @@ router.post('/set_temperatura',check_encendido, async (req, res) => {
     let id_prensa = Number(req.body.id)
 
     try {
-        if (estado_plc.unida['valor_' + id_prensa] == 1) {
-            if (id_prensa == 1 || id_prensa == 3) {
-                await s7.escribir_db_real(estado_plc.bloque_activo, estado_plc.set_temperatura['posicion_' + (id_prensa + 1)], Number(req.body.valor))
-            }
-        }
+
         await s7.escribir_db_real(estado_plc.bloque_activo, estado_plc.set_temperatura['posicion_' + id_prensa], Number(req.body.valor))
         res.status(202).send('ok')
     } catch (err) {

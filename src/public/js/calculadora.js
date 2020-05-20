@@ -179,8 +179,6 @@ function escribir_automata() {
             break
 
 
-
-
         case "btnMaxTempDesviacion1":
             $.ajax({
                 type: "POST",
