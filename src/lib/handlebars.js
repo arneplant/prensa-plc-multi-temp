@@ -24,4 +24,11 @@ hbsHelpers.sumUp = (text)=>{
   return text.length > 15? text.substring(0,14)+"..." : text
 }
 
+hbsHelpers.times =(n, block) => {
+  var accum = '';
+  for(var i = 1; i <= n; ++i)
+      accum += block.fn(i);
+  return accum;
+}
+
 module.exports = hbsHelpers;

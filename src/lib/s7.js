@@ -21,10 +21,12 @@ s7.cambiar_ip = function(nueva_ip){
 
 s7.conectar = async () => {
     await manage_config.read()
+    require('./estado-plc').num_prensas = manage_config.settings.press_count
     plcSettings.host = manage_config.settings.plc_ip
     return new Promise((resolve, reject) => {
         s7client.ConnectTo(plcSettings.host, plcSettings.rack, plcSettings.slot, (error) => {
             if (error) {
+                console.error('Error en la conexion '+error)
                 reject(error)
             }
             else {
@@ -48,6 +50,7 @@ leer_coil = (area, posicion) => {
     return new Promise((resolve, reject) => {
         s7client.ReadArea(area, 0, Number(posicion), 1, 1, (err, data) => {
             if (err) {
+                console.error('Error al leer coil '+err)
                 reject(err)
             }
             else {
@@ -77,11 +80,12 @@ leer_db = (db, posicion, tam) => {
             , 1
             , tam, (err, data) => {
             if (err) {
+                console.error(`Error al leer bloque ${db}, posicion ${posicion}, tamano ${tam}`)
                 reject(err)
             }
             else {
                 if(tam == 0x01){
-                    resolve({ datos: data[0] })
+                    resolve({ datos: data.readUInt8() })
                 }
                 else if(tam == 0x04){
                     resolve({ datos: data.readInt16BE() })

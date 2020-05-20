@@ -1,5 +1,5 @@
 const express = require ('express')
-const morgan = require('morgan')
+//const morgan = require('morgan')
 const exphbs = require('express-handlebars')
 const session = require('express-session');
 const path = require('path')
@@ -21,8 +21,10 @@ app.engine('.hbs',exphbs({
 }))
 app.set('view engine', '.hbs')
 
+
+
 // middleware
-app.use(morgan('dev'))
+//app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
@@ -51,8 +53,9 @@ app.use(express.static(path.join(__dirname,'src/public')))
 
 // start server
 const server = app.listen(app.get('port'),()=>{
-    console.log('Listening on port ',app.get('port'))  
+    console.log('Listening on port ',app.get('port'))
 })
+
 
 
 module.exports = server

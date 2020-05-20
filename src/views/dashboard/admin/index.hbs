@@ -9,7 +9,7 @@
             <th><span class="cabecera-columna">Press 2.1</span></th>
             <th><span class="cabecera-columna">Press 2.2</span></th>
         </tr>
-        <tr style="border:solid white">
+        <tr style="border:solid white; border-width: 0.5px;">
             <td><span class="cabecera-fila">Temperature</span></td>
             <td><span style="color: greenyellow;">
                     <i id="Temperature_1" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
@@ -25,7 +25,7 @@
                 </span></td>
         </tr>
 
-        <tr style="border:solid white">
+        <tr style="border:solid white; border-width: 0.5px;">
             <td><span class="cabecera-fila">Open Press</span></td>
             <td><span style="color: greenyellow;">
                     <i id="Open_Press_1" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
@@ -41,7 +41,7 @@
                 </span></td>
         </tr>
 
-        <tr style="border:solid white">
+        <tr style="border:solid white; border-width: 0.5px;">
             <td><span class="cabecera-fila">Close Press</span></td>
             <td><span style="color: greenyellow;">
                     <i id="Close_Press_1" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
@@ -57,7 +57,7 @@
                 </span></td>
         </tr>
 
-        <tr style="border:solid white">
+        <tr style="border:solid white; border-width: 0.5px;">
             <td><span class="cabecera-fila">Action Button</span></td>
             <td><span style="color: greenyellow;">
                     <i id="ActionButton_1" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
@@ -73,7 +73,7 @@
                 </span></td>
         </tr>
 
-        <tr style="border:solid white">
+        <tr style="border:solid white; border-width: 0.5px;">
             <td><span class="cabecera-fila">Emergency Button</span></td>
             <td><span style="color: greenyellow;">
                     <i id="EmergencyButton_1" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
@@ -89,7 +89,7 @@
                 </span></td>
         </tr>
 
-        <tr style="border:solid white">
+        <tr style="border:solid white; border-width: 0.5px;">
             <td><span class="cabecera-fila">Photoelectric Barrier</span></td>
             <td><span style="color: greenyellow;">
                     <i id="Photoelectric_1" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
@@ -104,22 +104,24 @@
                     <i id="Photoelectric_4" class="fa fa-circle-o fuente-grande" aria-hidden='true'></i>
                 </span></td>
         </tr>
-
     </table>
 </div>
 
 <script>
+    let swal_running = false
     setInterval(() => {
         $.ajax({
             type: "POST",
             url: "/plc/leer_leds",
             success: (data) => {
-                pintar_leds(data)
+                pintar_leds(data.data)
+                mostrar_alertas(data.conectado, data.encender_extractor == 1)
             },
             error: (xhr) => {
+                mostrar_alertas(true, false)
                 console.log(xhr)
             },
-                        timeout: 3000,
+            timeout: 3000,
         })
     }, 200)
 

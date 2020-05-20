@@ -3,52 +3,68 @@
 
     <div id='parametros-comunicacion' class="parametros-comunicacion">
         <div class="dos-botones-horizontal">
-            <button id="bloqueA" class="btn btn-danger btn-menu" onclick="cambiar_bloque(this,'A')">BLOCK A</button>
-            <button id="bloqueB" class="btn btn-danger btn-menu" onclick="cambiar_bloque(this,'B')">BLOCK B</button>
+            <button id="bloqueA" class="btn btn-danger btn-menu" onclick="cambiar_bloque(this,'0')">SIDE 1/2</button>
+            <button id="bloqueB" class="btn btn-danger btn-menu" onclick="cambiar_bloque(this,'1')">SIDE 3/4</button>
         </div>
 
         <div class="siete-elementos-horizontal">
-            <input id="ip1" class="input-ip" type="number" min="0" max="255" value="192" onmouseup="cambiar_ip()" />
+            <input id="ip1" class="input-ip" type="number" min="0" max="255" value="192" onmousedown="cambiando_ip = true;" onmouseup="cambiar_ip()" />
             <span class="punto-ip">.</span>
-            <input id="ip2" class="input-ip" type="number" min="0" max="255" value="168" onmouseup="cambiar_ip()" />
+            <input id="ip2" class="input-ip" type="number" min="0" max="255" value="168" onmousedown="cambiando_ip = true;" onmouseup="cambiar_ip()" />
             <span class="punto-ip">.</span>
-            <input id="ip3" class="input-ip" type="number" min="0" max="255" value="0" onmouseup="cambiar_ip()" />
+            <input id="ip3" class="input-ip" type="number" min="0" max="255" value="0" onmousedown="cambiando_ip = true;" onmouseup="cambiar_ip()" />
             <span class="punto-ip">.</span>
-            <input id="ip4" class="input-ip" type="number" min="0" max="255" value="1" onmouseup="cambiar_ip()" />
+            <input id="ip4" class="input-ip" type="number" min="0" max="255" value="1" onmousedown="cambiando_ip = true;" onmouseup="cambiar_ip()" />
+        </div>
+
+        <div class="dos-botones-horizontal">
+            <span class="punto-ip">Press count:</span>
+            <input id="press-count" class="input-ip" type="number" min="1" max="4" value="2"
+                onmouseup="cambiar_num_prensas()" />
         </div>
     </div>
 </div>
 
 <script>
+
+
+    let cambiando_ip = false
     let ip1 = document.getElementById('ip1')
     let ip2 = document.getElementById('ip2')
     let ip3 = document.getElementById('ip3')
     let ip4 = document.getElementById('ip4')
     let bloqueB = document.getElementById('bloqueB')
     let bloqueA = document.getElementById('bloqueA')
+    let press_count = document.getElementById('press-count')
     setInterval(() => {
-        $.ajax({
-            type: "POST",
-            url: "/config/leer_config",
-            success: (data) => {
-                mostrar_datos(data)
-            },
-            error: (xhr) => {
-                console.log(xhr)
-            },
-            timeout: 3000,
-        })
-    }, 2000)
+        if (!cambiando_ip) {
+            $.ajax({
+                type: "POST",
+                url: "/config/leer_config",
+                success: (data) => {
+                    mostrar_datos(data)
+                },
+                error: (xhr) => {
+                    console.log(xhr)
+                },
+                timeout: 3000,
+            })
+        }
+
+    }, 500)
 
     function mostrar_datos(data) {
         let plc_ip = data['plc_ip']
         let bloque = data['block']
+        let num_prensas = data['press_count']
 
-        if (bloque == 'A') {
+        press_count.value = num_prensas
+
+        if (bloque == '0') {
             bloqueA.className = bloqueA.className.replace('btn-danger', 'btn-success')
             bloqueB.className = bloqueB.className.replace('btn-success', 'btn-danger')
         }
-        else if (bloque == 'B') {
+        else if (bloque == '1') {
             bloqueB.className = bloqueB.className.replace('btn-danger', 'btn-success')
             bloqueA.className = bloqueA.className.replace('btn-success', 'btn-danger')
         }
@@ -60,7 +76,6 @@
             ip3.value = ip_troceada[2]
             ip4.value = ip_troceada[3]
         }
-
     }
 
     function cambiar_ip() {
@@ -72,12 +87,13 @@
                 ip3: ip3.value,
                 ip4: ip4.value,
             },
-            url: "/plc/config/cambiar_ip",
+            url: "/config/cambiar_ip",
             success: (data) => {
-
+                cambiando_ip = false
             },
             error: (xhr) => {
                 console.log(xhr)
+                cambiando_ip = false
             },
             timeout: 3000,
         })
@@ -89,7 +105,24 @@
             data: {
                 bloque: bloque
             },
-            url: "/plc/config/cambiar_bloque",
+            url: "/config/cambiar_bloque",
+            success: (data) => {
+
+            },
+            error: (xhr) => {
+                console.log(xhr)
+            },
+            timeout: 3000,
+        })
+    }
+
+    function cambiar_num_prensas() {
+        $.ajax({
+            type: "POST",
+            data: {
+                num_prensas: press_count.value
+            },
+            url: "/config/cambiar_num_prensas",
             success: (data) => {
 
             },

@@ -16,6 +16,7 @@ GET('/config', (data,err) => {
     
 })
 
+
 function cambiar_ip() {
     let mi_url = '/config/ip' + '/' + ip1.value + '/' + ip2.value + '/' + ip3.value + '/' + ip4.value
     GET(mi_url, (data,err)=>{

@@ -55,7 +55,7 @@ function escribir_automata() {
                 error: (xhr) => {
                     console.log(xhr)
                 },
-                timeout:3000,
+                timeout: 3000,
             })
             break
         case "btnUtil12": // set temperatura
@@ -72,7 +72,7 @@ function escribir_automata() {
                 error: (xhr) => {
                     console.log(xhr)
                 },
-                timeout:3000,
+                timeout: 3000,
             })
             break
         case "btnUtil13": // set temperatura
@@ -89,7 +89,7 @@ function escribir_automata() {
                 error: (xhr) => {
                     console.log(xhr)
                 },
-                timeout:3000,
+                timeout: 3000,
             })
             break
         case "btnUtil14": // set temperatura
@@ -106,7 +106,7 @@ function escribir_automata() {
                 error: (xhr) => {
                     console.log(xhr)
                 },
-                timeout:3000,
+                timeout: 3000,
             })
             break
         case "btnUtil21": // set set seg ciclo
@@ -123,7 +123,7 @@ function escribir_automata() {
                 error: (xhr) => {
                     console.log(xhr)
                 },
-                timeout:3000,
+                timeout: 3000,
             })
             break
         case "btnUtil22": // set seg ciclo
@@ -140,7 +140,7 @@ function escribir_automata() {
                 error: (xhr) => {
                     console.log(xhr)
                 },
-                timeout:3000,
+                timeout: 3000,
             })
             break
         case "btnUtil23": // set seg ciclo
@@ -157,7 +157,7 @@ function escribir_automata() {
                 error: (xhr) => {
                     console.log(xhr)
                 },
-                timeout:3000,
+                timeout: 3000,
             })
             break
         case "btnUtil24": // set seg ciclo
@@ -174,7 +174,7 @@ function escribir_automata() {
                 error: (xhr) => {
                     console.log(xhr)
                 },
-                timeout:3000,
+                timeout: 3000,
             })
             break
 
@@ -277,6 +277,78 @@ function escribir_automata() {
                 error: (xhr) => {
                     console.log(xhr)
                 }
+            })
+            break
+
+        case "botonCont31":
+            $.ajax({
+                type: "POST",
+                url: "/plc/set_contador_3",
+                data: {
+                    id: 1,
+                    valor: pantalla.value,
+                    //contador: 3,
+                },
+                success: (data) => {
+                },
+                error: (xhr) => {
+                    console.log(xhr)
+                },
+                timeout: 3000,
+            })
+            break
+
+        case "botonCont32":
+            $.ajax({
+                type: "POST",
+                url: "/plc/set_contador_3",
+                data: {
+                    id: 2,
+                    valor: pantalla.value,
+                    //contador: 3,
+                },
+                success: (data) => {
+                },
+                error: (xhr) => {
+                    console.log(xhr)
+                },
+                timeout: 3000,
+            })
+            break
+
+        case "botonCont33":
+            $.ajax({
+                type: "POST",
+                url: "/plc/set_contador_3",
+                data: {
+                    id: 3,
+                    valor: pantalla.value,
+                    //contador: 3,
+                },
+                success: (data) => {
+                },
+                error: (xhr) => {
+                    console.log(xhr)
+                },
+                timeout: 3000,
+            })
+            break
+
+        case "botonCont34":
+            $.ajax({
+                type: "POST",
+                url: "/plc/set_contador_3",
+                data: {
+                    id: 4,
+                    valor: pantalla.value,
+                    //contador: 3,
+                },
+                success: (data) => {
+                },
+                error: (xhr) => {
+                    console.log(xhr)
+                },
+                timeout: 3000,
             })
             break
     }

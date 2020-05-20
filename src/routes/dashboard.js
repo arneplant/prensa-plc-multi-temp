@@ -4,12 +4,13 @@ const estado_plc = require('../lib/estado-plc')
 
 router.get('/',(req,res)=>{
     estado_plc.pagina_activa = 1
-    res.render('dashboard/index')
+    res.render('dashboard/index',{num_prensas: estado_plc.num_prensas})
 })
 
 router.get('/edicion',(req,res)=>{
     const prensa = Number(req.query.prensa)
-    const unida = estado_plc.unida['valor_'+prensa]
+    const unida = Number(estado_plc.unida['valor_'+prensa])
+    console.log("Solicita prensa: "+prensa+ " y esta unida: "+unida)
     const _prensas = []
     if(unida == 1){
         if(prensa== 1 ||prensa == 2){

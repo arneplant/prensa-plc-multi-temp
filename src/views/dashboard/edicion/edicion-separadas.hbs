@@ -3,9 +3,9 @@
 
     {{#if (gt prensas.length 1)}}
     <div id="prensas-juntas" class="prensas-separadas">
-        {{else}}
+    {{else}}
         <div id="prensas-juntas" class="prensas-juntas">
-            {{/if}}
+    {{/if}}
             {{#each prensas}}
             <div id="prensa{{this.id}}" class="prensa">
                 <button id="btnEstado{{this.id}}" class="btn btn-danger btn-personalizado"
@@ -48,21 +48,24 @@
 </div>
 
 <script>
-    setInterval(() => {
+    let intervaloPeticionEdicion = setInterval(() => {
         $.ajax({
             type: "POST",
             url: "/plc/leer_estado_prensas",
             success: (data) => {
-                mostrar_datos(data)
+                mostrar_datos(data.data)
+                mostrar_alertas(data.conectado, data.encender_extractor == 1)
             },
             error: (xhr) => {
                 console.log(xhr)
+                mostrar_alertas(true,false)
             },
             timeout: 3000,
         })
     }, 200)
 
     let relacion = {
+        temperatura_ok: 'btnUtil1',
         encendida: 'edicion_campo_EstadoPrensa',
         set_temperatura: 'edicion_campo_TempActual',
         set_segundos_ciclo: 'edicion_campo_TiempoActual',
@@ -79,10 +82,10 @@
                         let _btn_modo = document.getElementById(botones_modo[j] + i)
                         if (_btn_modo != null) {
                             if (dato['valor_' + i] == j) {
-                                _btn_modo.className = _btn_modo.className.replace('btn-secondary', 'btn-success')
+                                _btn_modo.className = _btn_modo.className.replace('btn-secondary', 'btn-primary')
                             }
                             else {
-                                _btn_modo.className = _btn_modo.className.replace('btn-success', 'btn-secondary')
+                                _btn_modo.className = _btn_modo.className.replace('btn-primary', 'btn-secondary')
                             }
                         }
                     }
@@ -110,7 +113,14 @@
                         }
                     }
                     else {
-                        element.innerText = dato['valor_' + i]
+                        if (dato.name == "temperatura_ok") {
+                            if (dato['valor_' + i] == 0) {
+                                $(`#${relacion[dato.name] + "" + i}`).delay(50).fadeOut().fadeIn('slow')
+                            }
+                        }
+                        else {
+                            element.innerText = dato['valor_' + i]
+                        }
                     }
                 }
             }
@@ -130,7 +140,7 @@
             error: (xhr) => {
                 console.log(xhr)
             },
-            timeout: 3000,
+            timeout: 400,
         })
     }
 
@@ -148,7 +158,7 @@
             error: (xhr) => {
                 console.log(xhr)
             },
-            timeout: 3000,
+            timeout: 400,
         })
     }
 

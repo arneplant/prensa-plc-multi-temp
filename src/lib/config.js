@@ -15,7 +15,8 @@ config = {}
 
 config.settings = {
     'plc_ip': '',
-    'block': '',
+    'block': '0',
+    'press_count':'2',
 }
 
 config.cambiar_ip= async (ip_1,ip_2,ip_3,ip_4)=>{
@@ -31,8 +32,23 @@ config.cambiar_ip= async (ip_1,ip_2,ip_3,ip_4)=>{
 }
 
 config.cambiar_bloque = (bloque)=>{
-    config.settings.block = bloque
-    config.save()
+    try{
+        config.settings.block = bloque
+        config.save()
+        require('./estado-plc').cambiar_lado(bloque)
+    }catch(err){
+        console.log(err)
+    }
+}
+
+config.cambiar_num_prensas = (num_prensas)=>{
+    try{
+        config.settings.press_count = num_prensas
+        config.save()
+        require('./estado-plc').num_prensas = num_prensas
+    }catch(err){
+        console.log(err)
+    }
 }
 
 config.save = () => {

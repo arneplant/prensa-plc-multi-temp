@@ -14,18 +14,16 @@
     "bootstrap": "^4.3.1",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.0",
     "express-validator": "^5.3.1",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "morgan": "^1.9.1",
-    "express-session": "^1.17.0",
     "node-snap7": "^1.0.3",
     "popper.js": "^1.14.7",
     "tether": "^1.4.0"
   },
-  "devDependencies": {
-    "nodemon": "^1.19.4"
-  },
+  "devDependencies": {},
   "standard": {
     "globals": [
       "$"
