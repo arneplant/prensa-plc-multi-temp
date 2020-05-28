@@ -45,7 +45,7 @@ config.cambiar_num_prensas = (num_prensas)=>{
     try{
         config.settings.press_count = num_prensas
         config.save()
-        require('./estado-plc').num_prensas = num_prensas
+        require('./estado-plc').cambiar_num_prensas(num_prensas)
     }catch(err){
         console.log(err)
     }

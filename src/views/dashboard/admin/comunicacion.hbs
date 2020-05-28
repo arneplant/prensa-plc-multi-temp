@@ -8,19 +8,25 @@
         </div>
 
         <div class="siete-elementos-horizontal">
-            <input id="ip1" class="input-ip" type="number" min="0" max="255" value="192" onmousedown="cambiando_ip = true;" onmouseup="cambiar_ip()" />
+            <input id="ip1" class="input-ip" type="number" min="0" max="255" value="192"
+                onmousedown="cambiando_ip = true;" onmouseup="cambiar_ip()" />
             <span class="punto-ip">.</span>
-            <input id="ip2" class="input-ip" type="number" min="0" max="255" value="168" onmousedown="cambiando_ip = true;" onmouseup="cambiar_ip()" />
+            <input id="ip2" class="input-ip" type="number" min="0" max="255" value="168"
+                onmousedown="cambiando_ip = true;" onmouseup="cambiar_ip()" />
             <span class="punto-ip">.</span>
-            <input id="ip3" class="input-ip" type="number" min="0" max="255" value="0" onmousedown="cambiando_ip = true;" onmouseup="cambiar_ip()" />
+            <input id="ip3" class="input-ip" type="number" min="0" max="255" value="0"
+                onmousedown="cambiando_ip = true;" onmouseup="cambiar_ip()" />
             <span class="punto-ip">.</span>
-            <input id="ip4" class="input-ip" type="number" min="0" max="255" value="1" onmousedown="cambiando_ip = true;" onmouseup="cambiar_ip()" />
+            <input id="ip4" class="input-ip" type="number" min="0" max="255" value="1"
+                onmousedown="cambiando_ip = true;" onmouseup="cambiar_ip()" />
         </div>
 
         <div class="dos-botones-horizontal">
             <span class="punto-ip">Press count:</span>
-            <input id="press-count" class="input-ip" type="number" min="1" max="4" value="2"
-                onmouseup="cambiar_num_prensas()" />
+            <select id="press-count" class="input-ip" onchange="cambiar_num_prensas()">
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
         </div>
     </div>
 </div>
