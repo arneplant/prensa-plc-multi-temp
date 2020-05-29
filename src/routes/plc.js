@@ -4,11 +4,11 @@ const estado_plc = require('../lib/estado-plc')
 const config = require('../lib/config')
 const s7 = require('../lib/s7')
 
-function check_encendido (req,res,next){
-    if(estado_plc.conectado){
+function check_encendido(req, res, next) {
+    if (estado_plc.conectado) {
         return next()
     }
-    else{
+    else {
         return res.status(500).send('PLC Desconectado. Imposible actuar sobre variables.')
     }
 }
@@ -24,7 +24,7 @@ router.post('/leer_temperaturas_contadores', (req, res) => {
     })
 })
 
-router.post('/encender_apagar_prensa',check_encendido, async (req, res) => {
+router.post('/encender_apagar_prensa', check_encendido, async (req, res) => {
     let id_prensa = Number(req.body.id)
     let nuevo_estado = estado_plc.encendida['valor_' + id_prensa] == 1 ? 'false' : 'true'
     try {
@@ -52,24 +52,28 @@ router.post('/leer_estado_prensas', (req, res) => {
 })
 router.post('/leer_config', (req, res) => {
     let control = []
-    for(let i =1 ;i<=estado_plc.num_prensas;i++){
-        control.push(estado_plc['control_calentamiento_'+i])
+    for (let i = 1; i <= estado_plc.num_prensas; i++) {
+        control.push(estado_plc['control_calentamiento_' + i])
     }
-    res.send({ conectado: estado_plc.conectado, encender_extractor: estado_plc.encender_extractor.valor
-        , data: [estado_plc.ms_subida, estado_plc.desv_permitida], control: control })
+    res.send({
+        conectado: estado_plc.conectado, encender_extractor: estado_plc.encender_extractor.valor
+        , data: [estado_plc.ms_subida, estado_plc.desv_permitida], control: control
+    })
 })
 
-router.post('/separar_prensas',check_encendido, async (req, res) => {
+router.post('/separar_prensas', check_encendido, async (req, res) => {
     try {
-        await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.unida['posicion_' + (req.body.id)], 'false')
-        await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.unida['posicion_' + (Number(req.body.id) + 1)], 'false')
+        if (estado_plc.num_prensas == 4) {
+            await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.unida['posicion_' + (req.body.id)], 'false')
+            await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.unida['posicion_' + (Number(req.body.id) + 1)], 'false')
+        }
     } catch (err) {
         res.status(500).send(String(err))
     }
     res.status(202).send('ok')
 })
 
-router.post('/set_seg_ciclo',check_encendido, async (req, res) => {
+router.post('/set_seg_ciclo', check_encendido, async (req, res) => {
     let id_prensa = Number(req.body.id)
 
     try {
@@ -80,7 +84,7 @@ router.post('/set_seg_ciclo',check_encendido, async (req, res) => {
     }
 })
 
-router.post('/set_contador_3',check_encendido, async (req, res) => {
+router.post('/set_contador_3', check_encendido, async (req, res) => {
     try {
         await s7.escribir_db_long(estado_plc.bloque_activo, estado_plc['set_contador_3']['posicion_' + (req.body.id)], Number(req.body.valor))
         await s7.escribir_db_long(estado_plc.bloque_activo, estado_plc['contador_3']['posicion_' + (req.body.id)], Number(req.body.valor))
@@ -92,7 +96,7 @@ router.post('/set_contador_3',check_encendido, async (req, res) => {
     }
 })
 
-router.post('/reset_contadores',check_encendido, async (req, res) => {
+router.post('/reset_contadores', check_encendido, async (req, res) => {
     try {
         await s7.escribir_db_long(estado_plc.bloque_activo, estado_plc['contador_1']['posicion_' + (req.body.id)], 0)
         await s7.escribir_db_long(estado_plc.bloque_activo, estado_plc['contador_2']['posicion_' + (req.body.id)], 0)
@@ -115,7 +119,7 @@ router.post('/reset_contadores',check_encendido, async (req, res) => {
     }
 })
 
-router.post('/cambiar_saldos',check_encendido, async (req, res) => {
+router.post('/cambiar_saldos', check_encendido, async (req, res) => {
     try {
         let valor = estado_plc['saldos']['valor_' + (req.body.id)]
         if (req.body.sumar == 'true') {
@@ -131,7 +135,7 @@ router.post('/cambiar_saldos',check_encendido, async (req, res) => {
     }
 })
 
-router.post('/set_temp_desviacion',check_encendido, async (req, res) => {
+router.post('/set_temp_desviacion', check_encendido, async (req, res) => {
     try {
         await s7.escribir_db_int(estado_plc.bloque_activo, estado_plc.desv_permitida['posicion_' + (req.body.id)], Number(req.body.valor))
         res.status(202).send('ok')
@@ -140,7 +144,7 @@ router.post('/set_temp_desviacion',check_encendido, async (req, res) => {
     }
 })
 
-router.post('/set_ms_subida',check_encendido, async (req, res) => {
+router.post('/set_ms_subida', check_encendido, async (req, res) => {
     try {
         await s7.escribir_db_int(estado_plc.bloque_activo, estado_plc.ms_subida['posicion_' + (req.body.id)], Number(req.body.valor))
         res.status(202).send('ok')
@@ -149,9 +153,9 @@ router.post('/set_ms_subida',check_encendido, async (req, res) => {
     }
 })
 
-router.post('/set_contador',check_encendido, async (req, res) => {
+router.post('/set_contador', check_encendido, async (req, res) => {
     try {
-        
+
         await s7.escribir_db_long(estado_plc.bloque_activo, estado_plc['contador_' + req.body.contador]['posicion_' + (req.body.id)], Number(req.body.valor))
         res.status(202).send('ok')
     } catch (err) {
@@ -162,7 +166,7 @@ router.post('/set_contador',check_encendido, async (req, res) => {
 
 
 
-router.post('/set_temperatura',check_encendido, async (req, res) => {
+router.post('/set_temperatura', check_encendido, async (req, res) => {
     let id_prensa = Number(req.body.id)
 
     try {
@@ -174,11 +178,13 @@ router.post('/set_temperatura',check_encendido, async (req, res) => {
     }
 })
 
-router.post('/juntar_prensas',check_encendido, async (req, res) => {
+router.post('/juntar_prensas', check_encendido, async (req, res) => {
     try {
-        await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.unida['posicion_' + (req.body.id1)], 'true')
-        await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.unida['posicion_' + (req.body.id2)], 'true')
-        await s7.escribir_db_int(estado_plc.bloque_activo, estado_plc.modo['posicion_' + (req.body.id2)],estado_plc.modo['valor' + (req.body.id1)] )
+        if (estado_plc.num_prensas == 4) {
+            await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.unida['posicion_' + (req.body.id1)], 'true')
+            await s7.escribir_db_bool(estado_plc.bloque_activo, estado_plc.unida['posicion_' + (req.body.id2)], 'true')
+            await s7.escribir_db_int(estado_plc.bloque_activo, estado_plc.modo['posicion_' + (req.body.id2)], estado_plc.modo['valor' + (req.body.id1)])
+        }
         res.status(202).send('ok')
     } catch (err) {
         res.status(500).send(String(err))

@@ -2,16 +2,38 @@
     {{> menu-configuracion}}
 
     <div id="parametros-prensas" class="parametros-prensas">
+        {{#if (eq num_prensas 4)}}
         <div class="cinco-elementos-horizontal">
+         {{else}}
+         <div class="cuatro-elementos-horizontal">
+         {{/if}}
             <span></span>
-            <span class="cabecera-columna">Press 1.1</span>
-            <span class="cabecera-columna">Press 1.2</span>
-            <span class="cabecera-columna">Press 2.1</span>
-            <span class="cabecera-columna">Press 2.2</span>
+            {{#times num_prensas}}
+            <span class="cabecera-columna">Press {{this}}</span>
+            {{/times}}
         </div>
 
+
+
+        {{#if separadas}}
+        <div class="cabecera-y-cuatro-elementos-horizontal">
+            <span class="cabecera-fila">Temp.Dev.</span>
+
+            {{#times num_prensas}}
+                <div class="btn-group-vertical">
+                    <button id="btnMsSubida11" type="button" id="pre-reading-btn" class="btn btn-secondary  btn-personalizado"
+                        onclick="cambiar_ms({{this}},'high')"><span class='fuente-grande'>HIGH</span></button>
+                    <button id="btnMsSubida12" type="button" id="pre-reading-btn" class="btn btn-secondary  btn-personalizado"
+                        onclick="cambiar_ms({{this}}),'medium')"><span class='fuente-grande'>MEDIUM</span></button>
+                    <button id="btnMsSubida13" type="button" id="pre-reading-btn" class="btn btn-secondary  btn-personalizado"
+                        onclick="cambiar_ms({{this}},'low')"><span class='fuente-grande'>LOW</span></button>
+                </div>
+            {{/times}}
+        </div>
+
+        {{else}}
         <div class="cabecera-y-tres-elementos-horizontal">
-            <span class="cabecera-fila">Upload</span>
+            <span class="cabecera-fila">Temp.Dev.</span>
             <div class="btn-group-lg tres-botones-horizontal"
                 style="padding:2px; border: white;border-style:solid; border-width: 1px;">
                 <button id="btnMsSubida11" type="button" id="pre-reading-btn" class="btn btn-secondary"
@@ -20,17 +42,8 @@
                     onclick="cambiar_ms(1,'medium')"><span class='fuente-grande'>MEDIUM</span></button>
                 <button id="btnMsSubida13" type="button" id="pre-reading-btn" class="btn btn-secondary"
                     onclick="cambiar_ms(1,'low')"><span class='fuente-grande'>LOW</span></button>
-
             </div>
-            <!--button id="btnMsSubida1" class="btn btn-primary btn-personalizado" onclick="mostrar_calculadora(btnMsSubida1)">
-                <span id="msSubida1" class='fuente-grande'>0</span><span class='fuente-grande'>ms.</span>
-            </button-->
 
-
-            <!--button id="btnMsSubida3" class="btn btn-primary btn-personalizado"
-                onclick="mostrar_calculadora(btnMsSubida3)">
-                <span id="msSubida3" class='fuente-grande'>0</span><span class='fuente-grande'>ms.</span>
-            </button-->
             <div class="btn-group-lg tres-botones-horizontal"
                 style="padding:2px; border: white;border-style:solid; border-width: 1px;">
                 <button id="btnMsSubida31" type="button" id="pre-reading-btn" class="btn btn-secondary"
@@ -39,157 +52,149 @@
                     onclick="cambiar_ms(3,'medium')"><span class='fuente-grande'>MEDIUM</span></button>
                 <button id="btnMsSubida33" type="button" id="pre-reading-btn" class="btn btn-secondary"
                     onclick="cambiar_ms(3,'low')"><span class='fuente-grande'>LOW</span></button>
-
             </div>
         </div>
+        {{/if}}
 
-        <div class="cinco-elementos-horizontal">
-            <span class="cabecera-fila">Temp.Dev.</span>
-            <button id="btnMaxTempDesviacion1" class="btn btn-primary btn-personalizado"
-                onclick="mostrar_calculadora(btnMaxTempDesviacion1)">
-                <span id="maxTempDesviacion1" class='fuente-grande'>0 </span><span class='fuente-grande'>%</span>
-            </button>
-            <button id="btnMaxTempDesviacion2" class="btn btn-primary btn-personalizado"
-                onclick="mostrar_calculadora(btnMaxTempDesviacion2)">
-                <span id="maxTempDesviacion2" class='fuente-grande'>0 </span><span class='fuente-grande'>%</span>
-            </button>
-            <button id="btnMaxTempDesviacion3" class="btn btn-primary btn-personalizado"
-                onclick="mostrar_calculadora(btnMaxTempDesviacion3)">
-                <span id="maxTempDesviacion3" class='fuente-grande'>0 </span><span class='fuente-grande'>%</span>
-            </button>
-            <button id="btnMaxTempDesviacion4" class="btn btn-primary btn-personalizado"
-                onclick="mostrar_calculadora(btnMaxTempDesviacion4)">
-                <span id="maxTempDesviacion4" class='fuente-grande'>0 </span><span class='fuente-grande'>%</span>
-            </button>
-        </div>
 
+        {{#if (eq num_prensas 4)}}
         <div class="cinco-elementos-horizontal">
-            <span class="cabecera-fila">% Heating</span>
-            <button id="btnPercHeating1" class="btn btn-primary btn-personalizado">
-                <span id="percentageHeating1" class='fuente-grande'> </span><span class='fuente-grande'>%</span>
-            </button>
-            <button id="btnPercHeating2" class="btn btn-primary btn-personalizado">
-                <span id="percentageHeating2" class='fuente-grande'> </span><span class='fuente-grande'>%</span>
-            </button>
-            <button id="btnPercHeating3" class="btn btn-primary btn-personalizado">
-                <span id="percentageHeating3" class='fuente-grande'> </span><span class='fuente-grande'>%</span>
-            </button>
-            <button id="btnPercHeating4" class="btn btn-primary btn-personalizado">
-                <span id="percentageHeating4" class='fuente-grande'> </span><span class='fuente-grande'>%</span>
-            </button>
+         {{else}}
+         <div class="cuatro-elementos-horizontal">
+         {{/if}}
+                <span class="cabecera-fila">Temp.Dev.</span>
+                {{#times num_prensas}}
+                    <button id="btnMaxTempDesviacion{{this}}" class="btn btn-primary btn-personalizado"
+                    onclick="mostrar_calculadora(btnMaxTempDesviacion{{this}})">
+                    <span id="maxTempDesviacion{{this}}" class='fuente-grande'>0 </span><span class='fuente-grande'>%</span>
+                </button>
+                {{/times}}
+            </div>
+
+        {{#if (eq num_prensas 4)}}
+        <div class="cinco-elementos-horizontal">
+         {{else}}
+         <div class="cuatro-elementos-horizontal">
+         {{/if}}
+                <span class="cabecera-fila">% Heating</span>
+                {{#times num_prensas}}
+                      <button id="btnPercHeating{{this}}" class="btn btn-primary btn-personalizado">
+                    <span id="percentageHeating{{this}}" class='fuente-grande'> </span><span class='fuente-grande'>%</span>
+                </button>
+                {{/times}}
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    let swal_running = false
+    <script>
+        let swal_running = false
 
-    let distancias ={
-        high: 5000,
-        medium: 1400,
-        low: 1100,
-    }
-
-    setInterval(() => {
-        $.ajax({
-            type: "POST",
-            url: "/plc/leer_config",
-            success: (data) => {
-                mostrar_datos(data.data)
-                mostrar_control(data.control)
-                mostrar_alertas(data.conectado, data.encender_extractor == 1)
-            },
-            error: (xhr) => {
-                mostrar_alertas(true, false)
-                console.log(xhr)
-            },
-            timeout: 3000,
-        })
-    }, 200)
-
-    let relacion = {
-        desv_permitida: 'maxTempDesviacion',
-        ms_subida: 'btnMsSubida'
-    }
-
-    function cambiar_ms(id_prensa, distancia) {
-        let valor= distancias[distancia]
-        $.ajax({
-            type: "POST",
-            url: "/plc/set_ms_subida",
-            data: {
-                id: id_prensa,
-                valor: valor,
-            },
-            success: (data) => {
-
-            },
-            error: (xhr) => {
-                console.log(xhr)
-            },
-            timeout: 1000,
-        })
-    }
-
-    function mostrar_control(controles){
-        for(let control of controles){
-            let elemento = document.getElementById('percentageHeating'+control.prensa)
-            if(elemento){
-                let texto = ''
-                if(control.reposo == 1){
-                    texto = '-'
-                }
-                else{
-                    texto = parseInt(((control.tiempo_trans - control.tiempo_trans_reposo) / control.tiempo_trans) * 100)
-                }
-                elemento.innerHTML = texto
-            }
+        let distancias = {
+            high: 5000,
+            medium: 1400,
+            low: 1100,
         }
-    }
 
-    function mostrar_datos(data) {
-        for (let dato of data) {
-            for (let i = 1; i <= 4; i++) {
-                if (!relacion[dato.name].startsWith("btn")) {
-                    let element = document.getElementById(relacion[dato.name] + i)
-                    if (element != null) {
-                        element.innerText = dato['valor_' + i]
+        setInterval(() => {
+            $.ajax({
+                type: "POST",
+                url: "/plc/leer_config",
+                success: (data) => {
+                    mostrar_datos(data.data)
+                    mostrar_control(data.control)
+                    mostrar_alertas(data.conectado, data.encender_extractor == 1)
+                },
+                error: (xhr) => {
+                    mostrar_alertas(true, false)
+                    console.log(xhr)
+                },
+                timeout: 3000,
+            })
+        }, 200)
+
+        let relacion = {
+            desv_permitida: 'maxTempDesviacion',
+            ms_subida: 'btnMsSubida'
+        }
+
+        function cambiar_ms(id_prensa, distancia) {
+            let valor = distancias[distancia]
+            $.ajax({
+                type: "POST",
+                url: "/plc/set_ms_subida",
+                data: {
+                    id: id_prensa,
+                    valor: valor,
+                },
+                success: (data) => {
+
+                },
+                error: (xhr) => {
+                    console.log(xhr)
+                },
+                timeout: 1000,
+            })
+        }
+
+        function mostrar_control(controles) {
+            for (let control of controles) {
+                let elemento = document.getElementById('percentageHeating' + control.prensa)
+                if (elemento) {
+                    let texto = ''
+                    if (control.reposo == 1) {
+                        texto = '-'
                     }
-                }
-                else {
-                    let element1 = document.getElementById(relacion[dato.name] + (i) + (1))
-                    let element2 = document.getElementById(relacion[dato.name] + (i) + (2))
-                    let element3 = document.getElementById(relacion[dato.name] + (i) + (3))
-
-                    if (element1 && element2 && element3) {
-                        let valor = dato['valor_' + i]
-
-                        if (valor == distancias['high']) {
-                            element1.className = element1.className.replace('secondary', 'primary')
-                            element2.className = element2.className.replace('primary', 'secondary')
-                            element3.className = element3.className.replace('primary', 'secondary')
-
-                        }
-                        else if (valor == distancias['medium']) {
-                            element1.className = element1.className.replace('primary', 'secondary')
-                            element2.className = element2.className.replace('secondary', 'primary')
-                            element3.className = element3.className.replace('primary', 'secondary')
-
-                        }
-                        else if (valor == distancias['low']) {
-                            element1.className = element1.className.replace('primary', 'secondary')
-                            element2.className = element2.className.replace('primary', 'secondary')
-                            element3.className = element3.className.replace('secondary', 'primary')
-                        }
-                        
+                    else {
+                        texto = parseInt(((control.tiempo_trans - control.tiempo_trans_reposo) / control.tiempo_trans) * 100)
                     }
+                    elemento.innerHTML = texto
                 }
             }
         }
-    }
 
-    function mostrar_calculadora(id_boton) {
-        $("#modalCalculadora").modal('show')
-        idBotonSolicitaNumero = id_boton
-    }
-</script>
+        function mostrar_datos(data) {
+            for (let dato of data) {
+                for (let i = 1; i <= 4; i++) {
+                    if (!relacion[dato.name].startsWith("btn")) {
+                        let element = document.getElementById(relacion[dato.name] + i)
+                        if (element != null) {
+                            element.innerText = dato['valor_' + i]
+                        }
+                    }
+                    else {
+                        let element1 = document.getElementById(relacion[dato.name] + (i) + (1))
+                        let element2 = document.getElementById(relacion[dato.name] + (i) + (2))
+                        let element3 = document.getElementById(relacion[dato.name] + (i) + (3))
+
+                        if (element1 && element2 && element3) {
+                            let valor = dato['valor_' + i]
+
+                            if (valor == distancias['high']) {
+                                element1.className = element1.className.replace('secondary', 'primary')
+                                element2.className = element2.className.replace('primary', 'secondary')
+                                element3.className = element3.className.replace('primary', 'secondary')
+
+                            }
+                            else if (valor == distancias['medium']) {
+                                element1.className = element1.className.replace('primary', 'secondary')
+                                element2.className = element2.className.replace('secondary', 'primary')
+                                element3.className = element3.className.replace('primary', 'secondary')
+
+                            }
+                            else if (valor == distancias['low']) {
+                                element1.className = element1.className.replace('primary', 'secondary')
+                                element2.className = element2.className.replace('primary', 'secondary')
+                                element3.className = element3.className.replace('secondary', 'primary')
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
+        function mostrar_calculadora(id_boton) {
+            $("#modalCalculadora").modal('show')
+            idBotonSolicitaNumero = id_boton
+        }
+    </script>

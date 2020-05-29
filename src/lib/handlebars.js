@@ -10,7 +10,7 @@ hbsHelpers.gt = (a,b)=>{
 }
 
 hbsHelpers.eq = (a,b)=>{
-  return a===b
+  return a==b
 }
 
 hbsHelpers.first= (lista)=>{

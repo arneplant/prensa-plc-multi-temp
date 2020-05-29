@@ -3,6 +3,11 @@
         onclick="clearInterval(intervaloPeticionEdicion);window.location.href = '/dashboard';">
         <i class="fa fa-home" aria-hidden="true"></i>
     </button>
+
+    {{#if (eq prensas.length 1)}}
+    <button id="btnJuntar" class="btn btn-info btn-menu"></i>
+    </button>
+    {{else}}
     {{#if (eq unidas 0)}}
     <button id="btnJuntar" class="btn btn-info btn-menu"
         onclick="clearInterval(intervaloPeticionEdicion); juntar_prensas({{json prensas}})">
@@ -14,6 +19,8 @@
         <i class="fa fa-unlink" aria-hidden="true"></i>
     </button>
     {{/if}}
+    {{/if}}
+
     <button class="btn btn-info btn-menu"
         onclick="clearInterval(intervaloPeticionEdicion);window.location.href = '/dashboard/configuracion';">
         <i class="fa fa-cogs"></i>

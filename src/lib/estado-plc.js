@@ -594,43 +594,46 @@ function cambiar_lado_3x3(lado){
     variables.temperatura_ok.posicion_2 = (lado == 0) ? 560 : 1472
     variables.temperatura_ok.posicion_3 = (lado == 0) ? 864 : 1776
 
-    //////////////
 
-    variables.set_segundos_ciclo.posicion_1 = (lado == 0) ? 36 : 180
-    variables.set_segundos_ciclo.posicion_2 = (lado == 0) ? 70 : 214
-    variables.set_segundos_ciclo.posicion_3 = (lado == 0) ? 108 : 252
+    variables.set_segundos_ciclo.posicion_1 = (lado == 0) ? 34 : 148
+    variables.set_segundos_ciclo.posicion_2 = (lado == 0) ? 72 : 186
+    variables.set_segundos_ciclo.posicion_3 = (lado == 0) ? 110 : 224
 
-    variables.trabajando.posicion_1 = (lado == 0) ? 38 : 182
-    variables.trabajando.posicion_2 = (lado == 0) ? 72 : 216
-    variables.trabajando.posicion_3 = (lado == 0) ? 110 : 254
+    variables.trabajando.posicion_1 = (lado == 0) ? 288 : 1200
+    variables.trabajando.posicion_2 = (lado == 0) ? 592 : 1504
+    variables.trabajando.posicion_3 = (lado == 0) ? 896 : 1808
 
-    variables.led_abrir.posicion_1 = (lado == 0) ? 0 : 18
-    variables.led_abrir.posicion_2 = (lado == 0) ? 3 : 21
-    variables.led_abrir.posicion_3 = (lado == 0) ? 6 : 24
 
-    variables.led_cerrar.posicion_1 = (lado == 0) ? 1 : 19
-    variables.led_cerrar.posicion_2 = (lado == 0) ? 4 : 22
-    variables.led_cerrar.posicion_3 = (lado == 0) ? 7 : 25
+    // output
+    variables.led_abrir.posicion_1 = (lado == 0) ? 25 : 28
+    variables.led_abrir.posicion_2 = (lado == 0) ? 26 : 29
+    variables.led_abrir.posicion_3 = (lado == 0) ? 27 : 30
 
-    variables.led_temp.posicion_1 = (lado == 0) ? 2 : 20
-    variables.led_temp.posicion_2 = (lado == 0) ? 5 : 23
-    variables.led_temp.posicion_3 = (lado == 0) ? 8 : 26
-    variables.led_temp.posicion_4 = (lado == 0) ? 17 : 29
 
-    variables.led_barrera.posicion_1 = (lado == 0) ? 4 : 18
-    variables.led_barrera.posicion_2 = (lado == 0) ? 4 : 18
-    variables.led_barrera.posicion_3 = (lado == 0) ? 10 : 24//16
-    variables.led_barrera.posicion_4 = (lado == 0) ? 10 : 24//16
+    // output
+    variables.led_cerrar.posicion_1 = (lado == 0) ? 17 : 20
+    variables.led_cerrar.posicion_2 = (lado == 0) ? 18 : 21
+    variables.led_cerrar.posicion_3 = (lado == 0) ? 19 : 22
 
-    variables.led_emergencia.posicion_1 = (lado == 0) ? 5 : 19
-    variables.led_emergencia.posicion_2 = (lado == 0) ? 5 : 19
-    variables.led_emergencia.posicion_3 = (lado == 0) ? 11 : 25
-    variables.led_emergencia.posicion_4 = (lado == 0) ? 11 : 25
+    // output
+    variables.led_temp.posicion_1 = (lado == 0) ? 1 : 4
+    variables.led_temp.posicion_2 = (lado == 0) ? 2 : 5
+    variables.led_temp.posicion_3 = (lado == 0) ? 3 : 6
 
-    variables.led_accion.posicion_1 = (lado == 0) ? 0 : 12
-    variables.led_accion.posicion_2 = (lado == 0) ? 2 : 16
-    variables.led_accion.posicion_3 = (lado == 0) ? 6 : 20//18
-    variables.led_accion.posicion_4 = (lado == 0) ? 8 : 22
+    // input
+    variables.led_barrera.posicion_1 = (lado == 0) ? 3 : 17
+    variables.led_barrera.posicion_2 = (lado == 0) ? 7 : 21
+    variables.led_barrera.posicion_3 = (lado == 0) ? 11 : 25
+
+    // input
+    variables.led_emergencia.posicion_1 = (lado == 0) ? 6 : 16
+    variables.led_emergencia.posicion_2 = (lado == 0) ? 6 : 20
+    variables.led_emergencia.posicion_3 = (lado == 0) ? 10 : 24
+
+    // input
+    variables.led_accion.posicion_1 = (lado == 0) ? 1 : 13
+    variables.led_accion.posicion_2 = (lado == 0) ? 5 : 19
+    variables.led_accion.posicion_3 = (lado == 0) ? 9 : 23
 }
 
 // lado 0: 1.1 1.2 y 2.1 2.2
@@ -820,7 +823,7 @@ async function leer_leds(i) {
     variables.led_barrera['valor_' + i] = (await s7.leer_entrada(variables.led_barrera['posicion_' + i])).datos
     variables.led_temp['valor_' + i] = (await s7.leer_salida(variables.led_temp['posicion_' + i])).datos
     variables.led_abrir['valor_' + i] = (await s7.leer_salida(variables.led_abrir['posicion_' + i])).datos
-    variables.led_cerrar['valor_' + i] = (await s7.leer_salida(variables.led_cerrar['posicion_' + i])).datos
+    variables.led_cerrar['valor_' + i] = (await s7.leer_salida(variables.led_cerrar['posicion_' + i])).datos 
 }
 
 async function leer_config(i) {
