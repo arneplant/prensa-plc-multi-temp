@@ -9,41 +9,41 @@ const variables = {
     bloque_activo: 1,
     conectado: false,
     conectando: false,
-    control_calentamiento_1:{
+    control_calentamiento_1: {
         prensa: 1,
         tiempo_trans: 0,
         tiempo_trans_calentando: 0,
-        tiempo_trans_apagada:0,
-        tiempo_trans_reposo:0,
+        tiempo_trans_apagada: 0,
+        tiempo_trans_reposo: 0,
         estado_anterior: 0,
         reposo: 1,
     },
-    control_calentamiento_2:{
+    control_calentamiento_2: {
         prensa: 2,
         tiempo_trans: 0,
         tiempo_trans_calentando: 0,
-        tiempo_trans_apagada:0,
-        tiempo_trans_reposo:0,
+        tiempo_trans_apagada: 0,
+        tiempo_trans_reposo: 0,
         estado_anterior: 0,
         reposo: 1,
 
     },
-    control_calentamiento_3:{
+    control_calentamiento_3: {
         prensa: 3,
         tiempo_trans: 0,
         tiempo_trans_calentando: 0,
-        tiempo_trans_apagada:0,
-        tiempo_trans_reposo:0,
+        tiempo_trans_apagada: 0,
+        tiempo_trans_reposo: 0,
         estado_anterior: 0,
         reposo: 1,
 
     },
-    control_calentamiento_4:{
+    control_calentamiento_4: {
         prensa: 4,
         tiempo_trans: 0,
         tiempo_trans_calentando: 0,
-        tiempo_trans_apagada:0,
-        tiempo_trans_reposo:0,
+        tiempo_trans_apagada: 0,
+        tiempo_trans_reposo: 0,
         estado_anterior: 0,
         reposo: 1,
 
@@ -406,7 +406,7 @@ const variables = {
     encender_extractor: {
         tipo: 'bool',
         valor: 0,
-        posicion: 2305,
+        posicion: 2305, // o 1809
     }
 }
 var prensa_aliases = {
@@ -425,8 +425,10 @@ var prensa_aliases = {
 
 const timer = ms => new Promise(res => setTimeout(res, ms));
 
-function cambiar_lado_4x4(lado){
+function cambiar_lado_4x4(lado) {
     console.log("Cambiando lado a " + lado)
+    variables.encender_extractor.posicion = 2305
+
     variables.unida.posicion_1 = (lado == 0) ? 0 : 1153 // 1
     variables.unida.posicion_2 = (lado == 0) ? 0 : 1153
     variables.unida.posicion_3 = (lado == 0) ? 577 : 1729
@@ -538,8 +540,9 @@ function cambiar_lado_4x4(lado){
     variables.led_accion.posicion_4 = (lado == 0) ? 8 : 22
 }
 
-function cambiar_lado_3x3(lado){
+function cambiar_lado_3x3(lado) {
     console.log("Cambiando lado a " + lado)
+    variables.encender_extractor.posicion = 1809
     variables.ms_subida.posicion_1 = (lado == 0) ? 0 : 114
     variables.ms_subida.posicion_2 = (lado == 0) ? 38 : 152
     variables.ms_subida.posicion_3 = (lado == 0) ? 76 : 190
@@ -577,18 +580,16 @@ function cambiar_lado_3x3(lado){
     variables.contador_total.posicion_3 = (lado == 0) ? 94 : 208
 
     variables.set_temperatura.posicion_1 = (lado == 0) ? 22 : 136
-    variables.set_temperatura.posicion_2 = (lado == 0) ? 60 : 178
-    variables.set_temperatura.posicion_3 = (lado == 0) ? 98 : 216
-    
-    variables.desv_permitida.posicion_1 = (lado == 0) ? 26 : 140
-    variables.desv_permitida.posicion_2 = (lado == 0) ? 64 : 206
-    variables.desv_permitida.posicion_3 = (lado == 0) ? 102 : 244
+    variables.set_temperatura.posicion_2 = (lado == 0) ? 60 : 174
+    variables.set_temperatura.posicion_3 = (lado == 0) ? 98 : 212
 
-    
-    
-    variables.temperatura_actual.posicion_1 = (lado == 0) ? 28 : 174
-    variables.temperatura_actual.posicion_2 = (lado == 0) ? 60 : 208
-    variables.temperatura_actual.posicion_3 = (lado == 0) ? 104 : 246
+    variables.desv_permitida.posicion_1 = (lado == 0) ? 26 : 140
+    variables.desv_permitida.posicion_2 = (lado == 0) ? 64 : 178
+    variables.desv_permitida.posicion_3 = (lado == 0) ? 102 : 216
+
+    variables.temperatura_actual.posicion_1 = (lado == 0) ? 28 : 142
+    variables.temperatura_actual.posicion_2 = (lado == 0) ? 66 : 180
+    variables.temperatura_actual.posicion_3 = (lado == 0) ? 104 : 218
 
     variables.temperatura_ok.posicion_1 = (lado == 0) ? 256 : 1168
     variables.temperatura_ok.posicion_2 = (lado == 0) ? 560 : 1472
@@ -640,12 +641,12 @@ function cambiar_lado_3x3(lado){
 // lado 1: 3.1 3.2 y 4.1 4.2
 variables.cambiar_lado = cambiar_lado_4x4
 
-variables.cambiar_num_prensas= function(num_prensas){
+variables.cambiar_num_prensas = function (num_prensas) {
     variables.num_prensas = num_prensas
-    if(num_prensas == 3){
+    if (num_prensas == 3) {
         variables.cambiar_lado = cambiar_lado_3x3
     }
-    else if(num_prensas == 4){
+    else if (num_prensas == 4) {
         variables.cambiar_lado = cambiar_lado_4x4
     }
 }
@@ -689,7 +690,7 @@ setInterval(async () => {
             if (variables.pagina_activa == 1) {
                 await leer_temperaturas(i)
                 await leer_contadores(i)
-                if(variables.num_prensas==4){
+                if (variables.num_prensas == 4) {
                     await leer_unida(i)
                 }
                 await leer_segundos_ciclo(i)
@@ -700,9 +701,9 @@ setInterval(async () => {
             else if (variables.pagina_activa == 2) {
                 await leer_temperaturas(i)
                 await leer_segundos_ciclo(i)
-                if(variables.num_prensas==4){
+                if (variables.num_prensas == 4) {
                     await leer_unida(i)
-                }                await leer_encendida(i)
+                } await leer_encendida(i)
                 await leer_modos(i)
                 await leer_extractor()
             }
@@ -735,8 +736,8 @@ setInterval(async () => {
                     variables.conectando = false
                     //conectado = true
 
-                }).catch(_ =>{console.error('error then')})
-            }).catch(_=>{console.error('error then')});
+                }).catch(_ => { console.error('error then') })
+            }).catch(_ => { console.error('error then') });
         }
 
     }
@@ -744,57 +745,57 @@ setInterval(async () => {
 
 const limite_tiempo_control_calentamiento = 900 * 1000
 
-async function leer_control_calentamiento(i){
+async function leer_control_calentamiento(i) {
     let actual = variables.led_temp['valor_' + i] = (await s7.leer_salida(variables.led_temp['posicion_' + i])).datos
-    let anterior =variables['control_calentamiento_'+i].estado_anterior
+    let anterior = variables['control_calentamiento_' + i].estado_anterior
 
-    if(anterior == 1 && actual == 0){
-        variables['control_calentamiento_'+i].tiempo_trans_reposo+=1
-        variables['control_calentamiento_'+i].tiempo_trans+=1
+    if (anterior == 1 && actual == 0) {
+        variables['control_calentamiento_' + i].tiempo_trans_reposo += 1
+        variables['control_calentamiento_' + i].tiempo_trans += 1
     }
-    else if (anterior == 0 && actual == 1){
-        if (variables['control_calentamiento_'+i].reposo == 1){
-            variables['control_calentamiento_'+i].reposo = 0
-            variables['control_calentamiento_'+i].tiempo_trans = 0
+    else if (anterior == 0 && actual == 1) {
+        if (variables['control_calentamiento_' + i].reposo == 1) {
+            variables['control_calentamiento_' + i].reposo = 0
+            variables['control_calentamiento_' + i].tiempo_trans = 0
         }
 
-        variables['control_calentamiento_'+i].tiempo_trans_reposo=0
-        variables['control_calentamiento_'+i].tiempo_trans+=1
+        variables['control_calentamiento_' + i].tiempo_trans_reposo = 0
+        variables['control_calentamiento_' + i].tiempo_trans += 1
     }
-    else if(anterior == 0 && actual == 0){
-        if(variables['control_calentamiento_'+i].tiempo_trans_reposo * milisegundos_actualizacion
-        > limite_tiempo_control_calentamiento){
-            variables['control_calentamiento_'+i].reposo = 1
+    else if (anterior == 0 && actual == 0) {
+        if (variables['control_calentamiento_' + i].tiempo_trans_reposo * milisegundos_actualizacion
+            > limite_tiempo_control_calentamiento) {
+            variables['control_calentamiento_' + i].reposo = 1
         }
-        else{
-            variables['control_calentamiento_'+i].tiempo_trans++
-            variables['control_calentamiento_'+i].tiempo_trans_reposo++
+        else {
+            variables['control_calentamiento_' + i].tiempo_trans++
+            variables['control_calentamiento_' + i].tiempo_trans_reposo++
         }
     }
-    else if(anterior == 1 && actual == 1){
-        variables['control_calentamiento_'+i].tiempo_trans+=1
+    else if (anterior == 1 && actual == 1) {
+        variables['control_calentamiento_' + i].tiempo_trans += 1
     }
 
-    variables['control_calentamiento_'+i].estado_anterior = actual
+    variables['control_calentamiento_' + i].estado_anterior = actual
 
-/*     mientras que 1==1:
-	si anterior == 1 y actual == 0:
-		tiemporeposo++
-		tiempo++
-	si_no si anterior == 0 y actual == 1:
-		si reposo == 1:
-			reposo = 0
-			tiempo=0
-		tiemporeposo = 0
-		tiempo++
-	si_no si anterior == 0 y actual == 0:
-		si tiemporeposo > 15 min:
-			reposo = 1
-		si_no:
-			tiempo++
-			tiemporeposo++
-	si_no si anterior == 1 y actual == 1:
-		tiempo++ */
+    /*     mientras que 1==1:
+        si anterior == 1 y actual == 0:
+            tiemporeposo++
+            tiempo++
+        si_no si anterior == 0 y actual == 1:
+            si reposo == 1:
+                reposo = 0
+                tiempo=0
+            tiemporeposo = 0
+            tiempo++
+        si_no si anterior == 0 y actual == 0:
+            si tiemporeposo > 15 min:
+                reposo = 1
+            si_no:
+                tiempo++
+                tiemporeposo++
+        si_no si anterior == 1 y actual == 1:
+            tiempo++ */
 }
 
 async function leer_saldos(i) {
@@ -823,7 +824,7 @@ async function leer_leds(i) {
     variables.led_barrera['valor_' + i] = (await s7.leer_entrada(variables.led_barrera['posicion_' + i])).datos
     variables.led_temp['valor_' + i] = (await s7.leer_salida(variables.led_temp['posicion_' + i])).datos
     variables.led_abrir['valor_' + i] = (await s7.leer_salida(variables.led_abrir['posicion_' + i])).datos
-    variables.led_cerrar['valor_' + i] = (await s7.leer_salida(variables.led_cerrar['posicion_' + i])).datos 
+    variables.led_cerrar['valor_' + i] = (await s7.leer_salida(variables.led_cerrar['posicion_' + i])).datos
 }
 
 async function leer_config(i) {
@@ -836,7 +837,7 @@ async function leer_contadores(i) {
         let contador = variables['contador_' + j]
         contador['valor_' + i] = (await s7.leer_long_db(variables.bloque_activo, contador['posicion_' + i])).datos
     }
-    variables.set_contador_3['valor_'+i] = (await s7.leer_long_db(variables.bloque_activo, variables.set_contador_3['posicion_'+i])).datos
+    variables.set_contador_3['valor_' + i] = (await s7.leer_long_db(variables.bloque_activo, variables.set_contador_3['posicion_' + i])).datos
 }
 
 async function leer_segundos_ciclo(i) {

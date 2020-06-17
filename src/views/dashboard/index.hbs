@@ -1,4 +1,8 @@
+{{#if (eq num_prensas 3)}}
+<div class="grid-pagina-1-3-prensas">
+{{else}}
 <div class="grid-pagina-1">
+{{/if}}
 
     {{#times num_prensas}}
     <div class="btn-temp-{{this}}">

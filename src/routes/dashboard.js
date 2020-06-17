@@ -50,6 +50,7 @@ router.get('/edicion',(req,res)=>{
 
 router.get('/configuracion',(req,res)=>{
     res.render('dashboard/configuracion/index',{separadas: ( estado_plc.num_prensas == 3?true:false), num_prensas: estado_plc.num_prensas})
+    estado_plc.pagina_activa = 3
 
 })
 

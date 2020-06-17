@@ -17,15 +17,15 @@
 
         {{#if separadas}}
         <div class="cabecera-y-cuatro-elementos-horizontal">
-            <span class="cabecera-fila">Temp.Dev.</span>
+            <span class="cabecera-fila">Up ms.</span>
 
             {{#times num_prensas}}
                 <div class="btn-group-vertical">
-                    <button id="btnMsSubida11" type="button" id="pre-reading-btn" class="btn btn-secondary  btn-personalizado"
+                    <button id="btnMsSubida{{this}}1" type="button" id="pre-reading-btn" class="btn btn-secondary  btn-personalizado"
                         onclick="cambiar_ms({{this}},'high')"><span class='fuente-grande'>HIGH</span></button>
-                    <button id="btnMsSubida12" type="button" id="pre-reading-btn" class="btn btn-secondary  btn-personalizado"
-                        onclick="cambiar_ms({{this}}),'medium')"><span class='fuente-grande'>MEDIUM</span></button>
-                    <button id="btnMsSubida13" type="button" id="pre-reading-btn" class="btn btn-secondary  btn-personalizado"
+                    <button id="btnMsSubida{{this}}2" type="button" id="pre-reading-btn" class="btn btn-secondary  btn-personalizado"
+                        onclick="cambiar_ms({{this}},'medium')"><span class='fuente-grande'>MEDIUM</span></button>
+                    <button id="btnMsSubida{{this}}3" type="button" id="pre-reading-btn" class="btn btn-secondary  btn-personalizado"
                         onclick="cambiar_ms({{this}},'low')"><span class='fuente-grande'>LOW</span></button>
                 </div>
             {{/times}}
@@ -118,6 +118,7 @@
         }
 
         function cambiar_ms(id_prensa, distancia) {
+            console.log(`${id_prensa}  ${distancia}`)
             let valor = distancias[distancia]
             $.ajax({
                 type: "POST",
