@@ -202,11 +202,28 @@
         }
     }
 
+
+    const contadorClicks = {
+
+    }
+
     function triple_click(e) {
         e = e || window.event
-        if (e.detail === 3) {
-            reset_contador_individual(e.target)
+        let idTarget = e.target.id
+        if(!contadorClicks[idTarget]){
+            contadorClicks[idTarget] = 1
         }
+        else{
+            contadorClicks[idTarget] += 1
+            if(contadorClicks[idTarget] == 3){
+                reset_contador_individual(e.target)
+                contadorClicks[idTarget]=0
+            }
+        }
+
+        setTimeout(()=>{
+            contadorClicks[idTarget] = 0
+        },5000)
     }
 
     function reset_contador_individual(target) {
