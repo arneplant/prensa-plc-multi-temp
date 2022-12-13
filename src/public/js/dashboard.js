@@ -160,7 +160,7 @@ function armar_tabla_estados() {
             if (btn.id.startsWith('botonTemp')) {
                 btn.innerHTML = `
                 <div class='dos-textos-vertical'>
-                    <div><span id="estados_campo_TempActual${i + 1}" class='fuente-grande'>0</span><span class='fuente-grande'>º</span></div>
+                    <div><span id="estados_campo_TempActual${i + 1}" class='fuente-grande'>0</span><span class='fuente-grande'>ººº</span></div>
                     <div> <span class='fuente-mediana'>&#60;</span>
                             <span id="estados_campo_SetTemperatura${i + 1}" class='fuente-mediana'>0</span>
                             <span class='fuente-mediana'>º</span>

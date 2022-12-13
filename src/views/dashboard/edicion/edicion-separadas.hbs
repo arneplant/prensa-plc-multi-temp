@@ -1,7 +1,7 @@
 <div id="pagina-2" class="pagina-2">
     {{> menu-edicion}}
 
-    
+
 
     {{#if (gt prensas.length 1)}}
     <div id="prensas-juntas" class="prensas-separadas">
@@ -17,11 +17,28 @@
                 </button>
 
                 <div class="dos-botones-horizontal">
-                    <button id="btnUtil1{{this.id}}" class="btn btn-danger btn-personalizado"
-                        onclick="mostrar_calculadora(btnUtil1{{this.id}})">
-                        <span id="edicion_campo_TempActual{{this.id}}" class='fuente-grande'>-1</span><span
-                            class='fuente-grande'>º</span>
-                    </button>
+                    <div class="dos-textos-vertical">
+                        <div class="dos-botones-horizontal">
+                            <button id="btnUtil1{{this.id}}" class="btn btn-danger btn-personalizado"
+                                onclick="mostrar_calculadora(btnUtil1{{this.id}})">
+                                <span
+                            class='fuente-grande'>⇩</span><span id="edicion_campo_TempActual{{this.id}}" class='fuente-grande'>-1</span><span
+                                    class='fuente-grande'>º</span>
+                            </button>
+                            <button id="btnUtilUp1{{this.id}}" class="btn btn-danger btn-personalizado"
+                                onclick="mostrar_calculadora(btnUtilUp1{{this.id}})">
+                                <span
+                            class='fuente-grande'>⇧</span><span id="edicion_campo_TempActualUp{{this.id}}" class='fuente-grande'>-1</span><span
+                                    class='fuente-grande'>º</span>
+                            </button>
+                        </div>
+                        <button id="btnUtilAll1{{this.id}}" class="btn btn-danger btn-personalizado"
+                                onclick="mostrar_calculadora(btnUtilAll1{{this.id}})">
+                                <span id="edicion_campo_TempActualAll{{this.id}}" class='fuente-grande'>⇧⇩Set both </span>
+                            </button>
+                    </div>
+
+
                     <button id="btnUtil2{{this.id}}" class="btn btn-danger btn-personalizado"
                         onclick="mostrar_calculadora(btnUtil2{{this.id}})">
                         <span id="edicion_campo_TiempoActual{{this.id}}" class='fuente-grande'>-1</span><span
@@ -60,7 +77,7 @@
             },
             error: (xhr) => {
                 console.log(xhr)
-                mostrar_alertas(true,false)
+                mostrar_alertas(true, false)
             },
             timeout: 3000,
         })
@@ -70,10 +87,11 @@
         temperatura_ok: 'btnUtil1',
         encendida: 'edicion_campo_EstadoPrensa',
         set_temperatura: 'edicion_campo_TempActual',
+        set_temperatura_up: 'edicion_campo_TempActualUp',
         set_segundos_ciclo: 'edicion_campo_TiempoActual',
     }
 
-    let botones_pintar = ['btnEstado', 'btnUtil1', 'btnUtil2']
+    let botones_pintar = ['btnEstado', 'btnUtil1', 'btnUtil2','btnUtilUp1','btnUtilAll1']
     let botones_modo = ['btnModo0', 'btnModo1', 'btnModo2']
 
     function mostrar_datos(data) {

@@ -39,75 +39,87 @@ function enviar_valor_y_salir() {
     salir_calculadora()
 }
 
+function setTemperaturaPorId(id) {
+    $.ajax({
+        type: "POST",
+        url: "/plc/set_temperatura",
+        data: {
+            id: id,
+            valor: pantalla.value,
+        },
+        success: (data) => {
+
+        },
+        error: (xhr) => {
+            console.log(xhr)
+        },
+        timeout: 3000,
+    })
+}
+
+
+function setTemperaturaUpPorId(id) {
+    $.ajax({
+        type: "POST",
+        url: "/plc/set_temperatura_up",
+        data: {
+            id: id,
+            valor: pantalla.value,
+        },
+        success: (data) => {
+
+        },
+        error: (xhr) => {
+            console.log(xhr)
+        },
+        timeout: 3000,
+    })
+}
+
 function escribir_automata() {
     switch (idBotonSolicitaNumero.id) {
         case "btnUtil11": // set temperatura
-            $.ajax({
-                type: "POST",
-                url: "/plc/set_temperatura",
-                data: {
-                    id: 1,
-                    valor: pantalla.value,
-                },
-                success: (data) => {
-
-                },
-                error: (xhr) => {
-                    console.log(xhr)
-                },
-                timeout: 3000,
-            })
+            setTemperaturaPorId(1)
             break
         case "btnUtil12": // set temperatura
-            $.ajax({
-                type: "POST",
-                url: "/plc/set_temperatura",
-                data: {
-                    id: 2,
-                    valor: pantalla.value,
-                },
-                success: (data) => {
-
-                },
-                error: (xhr) => {
-                    console.log(xhr)
-                },
-                timeout: 3000,
-            })
+            setTemperaturaPorId(2)
             break
         case "btnUtil13": // set temperatura
-            $.ajax({
-                type: "POST",
-                url: "/plc/set_temperatura",
-                data: {
-                    id: 3,
-                    valor: pantalla.value,
-                },
-                success: (data) => {
-
-                },
-                error: (xhr) => {
-                    console.log(xhr)
-                },
-                timeout: 3000,
-            })
+            setTemperaturaPorId(3)
             break
         case "btnUtil14": // set temperatura
-            $.ajax({
-                type: "POST",
-                url: "/plc/set_temperatura",
-                data: {
-                    id: 4,
-                    valor: pantalla.value,
-                },
-                success: (data) => {
+            setTemperaturaPorId(4)
+            break
 
-                },
-                error: (xhr) => {
-                    console.log(xhr)
-                },
-                timeout: 3000,
-            })
+        case "btnUtilUp11": // set temperatura
+            setTemperaturaUpPorId(1)
+            break
+        case "btnUtilUp12": // set temperatura
+            setTemperaturaUpPorId(2)
+
+            break
+        case "btnUtilUp13": // set temperatura
+            setTemperaturaUpPorId(3)
+
+            break
+        case "btnUtilUp14": // set temperatura
+            setTemperaturaUpPorId(4)
+            break
+        case "btnUtilAll11": // set temperatura
+            setTemperaturaPorId(1)
+            setTemperaturaUpPorId(1)
+            break
+        case "btnUtilAll12": // set temperatura
+            setTemperaturaPorId(2)
+            setTemperaturaUpPorId(2)
+            break
+        case "btnUtilAll13": // set temperatura
+            setTemperaturaPorId(3)
+            setTemperaturaUpPorId(3)
+            break
+        case "btnUtilAll14": // set temperatura
+            setTemperaturaPorId(4)
+            setTemperaturaUpPorId(4)
             break
         case "btnUtil21": // set set seg ciclo
             $.ajax({

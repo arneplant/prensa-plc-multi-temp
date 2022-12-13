@@ -20,7 +20,7 @@ router.post('/leer_leds', (req, res) => {
 router.post('/leer_temperaturas_contadores', (req, res) => {
     res.send({
         conectado: estado_plc.conectado, encender_extractor: estado_plc.encender_extractor.valor, data: [estado_plc.saldos, estado_plc.set_contador_3, estado_plc.contador_1, estado_plc.contador_2, estado_plc.contador_3,
-        estado_plc.set_temperatura, estado_plc.temperatura_actual, estado_plc.temperatura_ok, estado_plc.set_segundos_ciclo, estado_plc.encendida]
+        estado_plc.set_temperatura, estado_plc.temperatura_actual, estado_plc.temperatura_actual_up, estado_plc.set_temperatura_up, estado_plc.temperatura_ok, estado_plc.set_segundos_ciclo, estado_plc.encendida]
     })
 })
 
@@ -48,7 +48,7 @@ router.post('/cambiar_modo', check_encendido, async (req, res) => {
 })
 
 router.post('/leer_estado_prensas', (req, res) => {
-    res.send({ conectado: estado_plc.conectado, encender_extractor: estado_plc.encender_extractor.valor, data: [estado_plc.encendida, estado_plc.set_temperatura, estado_plc.temperatura_ok, estado_plc.set_segundos_ciclo, estado_plc.modo] })
+    res.send({ conectado: estado_plc.conectado, encender_extractor: estado_plc.encender_extractor.valor, data: [estado_plc.encendida, estado_plc.set_temperatura, estado_plc.set_temperatura_up, estado_plc.temperatura_actual_up, estado_plc.temperatura_ok, estado_plc.set_segundos_ciclo, estado_plc.modo] })
 })
 router.post('/leer_config', (req, res) => {
     let control = []
@@ -172,6 +172,17 @@ router.post('/set_temperatura', check_encendido, async (req, res) => {
     try {
 
         await s7.escribir_db_real(estado_plc.bloque_activo, estado_plc.set_temperatura['posicion_' + id_prensa], Number(req.body.valor))
+        res.status(202).send('ok')
+    } catch (err) {
+        res.status(500).send(String(err))
+    }
+})
+
+router.post('/set_temperatura_up', check_encendido, async (req, res) => {
+    let id_prensa = Number(req.body.id)
+
+    try {
+        await s7.escribir_db_real(estado_plc.bloque_activo, estado_plc.set_temperatura_up['posicion_' + id_prensa], Number(req.body.valor))
         res.status(202).send('ok')
     } catch (err) {
         res.status(500).send(String(err))

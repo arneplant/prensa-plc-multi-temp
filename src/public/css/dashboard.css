@@ -282,7 +282,7 @@ div{
 .dos-botones-horizontal{
   display: grid;
   grid-template-columns: repeat(2,1fr);
-  border:0px;
+  border-width: 1px;
   grid-column-gap: 2px;
 }
 

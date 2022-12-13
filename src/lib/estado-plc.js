@@ -246,6 +246,33 @@ const variables = {
         posicion_4: 0,
     },
 
+    set_temperatura_up:{
+        name: 'set_temperatura_up',
+        alias: '1ASetTemperaturaUp',
+        tipo: 'real',
+        valor_1: -1,
+        valor_2: -1,
+        valor_3: -1,
+        valor_4: -1,
+        posicion_1: 30,
+        posicion_2: 64,
+        posicion_3: 0,
+        posicion_4: 0,
+    },
+
+    temperatura_actual_up:{
+        name: 'temperatura_actual_up',
+        alias: '1ATemperaturaUp',
+        tipo: 'real',
+        valor_1: -1,
+        valor_2: -1,
+        valor_3: -1,
+        valor_4: -1,
+        posicion_1: 30,
+        posicion_2: 64,
+        posicion_3: 0,
+        posicion_4: 0,
+    },
     temperatura_ok: {
         name: 'temperatura_ok',
         tipo: 'bool',
@@ -426,7 +453,7 @@ var prensa_aliases = {
 const timer = ms => new Promise(res => setTimeout(res, ms));
 
 function cambiar_lado_4x4(lado) {
-    console.log("Cambiando lado a " + lado)
+    console.log("Cambiando lado a 4x4 " + lado)
     variables.encender_extractor.posicion = 2305
 
     variables.unida.posicion_1 = (lado == 0) ? 0 : 1153 // 1
@@ -484,6 +511,11 @@ function cambiar_lado_4x4(lado) {
     variables.set_temperatura.posicion_3 = (lado == 0) ? 96 : 240
     variables.set_temperatura.posicion_4 = (lado == 0) ? 130 : 274
 
+    variables.set_temperatura_up.posicion_1 = (lado == 0) ? 364 : 404
+    variables.set_temperatura_up.posicion_2 = (lado == 0) ? 374 : 414
+    variables.set_temperatura_up.posicion_3 = (lado == 0) ? 384 : 424
+    variables.set_temperatura_up.posicion_4 = (lado == 0) ? 394 : 434
+
     variables.desv_permitida.posicion_1 = (lado == 0) ? 28 : 172
     variables.desv_permitida.posicion_2 = (lado == 0) ? 62 : 206
     variables.desv_permitida.posicion_3 = (lado == 0) ? 100 : 244
@@ -493,6 +525,11 @@ function cambiar_lado_4x4(lado) {
     variables.temperatura_actual.posicion_2 = (lado == 0) ? 64 : 208
     variables.temperatura_actual.posicion_3 = (lado == 0) ? 102 : 246
     variables.temperatura_actual.posicion_4 = (lado == 0) ? 136 : 280
+
+    variables.temperatura_actual_up.posicion_1 = (lado == 0) ? 368 : 408
+    variables.temperatura_actual_up.posicion_2 = (lado == 0) ? 378 : 418
+    variables.temperatura_actual_up.posicion_3 = (lado == 0) ? 388 : 428
+    variables.temperatura_actual_up.posicion_4 = (lado == 0) ? 398 : 438
 
     variables.temperatura_ok.posicion_1 = (lado == 0) ? 272 : 1424
     variables.temperatura_ok.posicion_2 = (lado == 0) ? 544 : 1696
@@ -658,7 +695,7 @@ config.read().then(_ => {
 
     variables.cambiar_num_prensas(config.settings.press_count)
     variables.cambiar_lado(config.settings.block)
-}).catch((err) => { console.log("Error al leer lado " + err) })
+}).catch((err) => { throw err; console.log("Error al leer lado " + err) })
 
 let i = 0
 variables.conectando = false
@@ -846,6 +883,8 @@ async function leer_segundos_ciclo(i) {
 
 async function leer_temperaturas(i) {
     variables.temperatura_actual['valor_' + i] = Math.round((await s7.leer_real_db(variables.bloque_activo, variables.temperatura_actual['posicion_' + i])).datos * 100) / 100
+    variables.temperatura_actual_up['valor_' + i] = Math.round(((await s7.leer_long_db(variables.bloque_activo, variables.temperatura_actual_up['posicion_' + i])).datos / 10.0)  * 100)/ 100
+    variables.set_temperatura_up['valor_' + i] = (await s7.leer_real_db(variables.bloque_activo, variables.set_temperatura_up['posicion_' + i])).datos
     variables.set_temperatura['valor_' + i] = (await s7.leer_real_db(variables.bloque_activo, variables.set_temperatura['posicion_' + i])).datos
     variables.temperatura_ok['valor_' + i] = (await s7.leer_bool_db(variables.bloque_activo, variables.temperatura_ok['posicion_' + i])).datos
 }

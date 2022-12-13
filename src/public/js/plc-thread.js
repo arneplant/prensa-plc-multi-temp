@@ -262,7 +262,7 @@ function escribir_temperaturas() {
     for (let i = 1; i <= variables.num_prensas; i++) {
         let temperatura = variables['temperatura_actual']
         let element = document.getElementById('estados_campo_TempActual' + i)
-        element.innerHTML = temperatura['valor_' + i]
+        element.innerHTML = temperatura['valor_' + i] 
 
         let set_temperatura = variables['set_temperatura']
         let element_2 = document.getElementById('estados_campo_SetTemperatura' + i)

@@ -1,252 +1,266 @@
 {{#if (eq num_prensas 3)}}
 <div class="grid-pagina-1-3-prensas">
-{{else}}
-<div class="grid-pagina-1">
-{{/if}}
+    {{else}}
+    <div class="grid-pagina-1">
+        {{/if}}
 
-    {{#times num_prensas}}
-    <div class="btn-temp-{{this}}">
-        <button id="botonTemp{{this}}" class="btn btn-extendido btn-danger"
-            onclick="clearInterval(intervaloPeticionIndex);window.location.href = '/dashboard/edicion?prensa={{this}}';">
-            <div class='dos-textos-vertical'>
-                <div><span id="estados_campo_TempActual{{this}}" class='fuente-grande'>0</span><span
-                        class='fuente-grande'>º</span></div>
-                <div> <span class='fuente-mediana'>&#60;</span>
-                    <span id="estados_campo_SetTemperatura{{this}}" class='fuente-mediana'>0</span>
-                    <span class='fuente-mediana'>º</span>
-                    <span class='fuente-mediana'>&#62;</span>
+        {{#times num_prensas}}
+        <div class="btn-temp-{{this}}">
+            <button id="botonTemp{{this}}" class="btn btn-extendido btn-danger dos-botones-horizontal"
+                onclick="clearInterval(intervaloPeticionIndex);window.location.href = '/dashboard/edicion?prensa={{this}}';">
+                
+                <div class='dos-textos-vertical'>
+                    <div><span id="estados_campo_TempActual{{this}}" class='fuente-grande'>0</span><span
+                            class='fuente-grande'>º</span></div>
+                    <div> <span class='fuente-mediana'>&#60;</span>
+                        <span id="estados_campo_SetTemperatura{{this}}" class='fuente-mediana'>0</span>
+                        <span class='fuente-mediana'>º</span>
+                        <span class='fuente-mediana'>&#62;</span>
+                    </div>
                 </div>
-            </div>
-        </button>
-    </div>
-    <div class="btn-tiemp-{{this}}">
-        <button id="botonTime{{this}}" class="btn btn-extendido btn-danger"
-            onclick="clearInterval(intervaloPeticionIndex);window.location.href = '/dashboard/edicion?prensa={{this}}';">
-            <span id="estados_campo_TiempoActual{{this}}" class='fuente-grande'>0</span>
-            <span class='fuente-grande'>''</span>
-        </button>
-    </div>
-    <div class="btn-cont-1{{this}}">
-        <button id="botonCont1{{this}}" class="btn btn-extendido btn-danger" onclick="triple_click(event)">
-            <span id="estados_campo_Contador1{{this}}" class='fuente-grande'>-1</span>
-        </button>
-    </div>
-    <div class="btn-cont-2{{this}}">
-        <button id="botonCont2{{this}}" class="btn btn-extendido btn-danger" onclick="triple_click(event)">
-            <span id="estados_campo_Contador2{{this}}" class='fuente-grande'>-1</span>
-        </button>
-    </div>
-    <div class="btn-cont-3{{this}}">
-        <button id="botonCont3{{this}}" class="btn btn-extendido btn-danger" onclick="mostrar_calculadora(botonCont3{{this}})">
-            <div class="dos-textos-vertical">
-                <span id="estados_campo_Contador3{{this}}" class='fuente-grande'>-1</span>
-                <div> <span class='fuente-mediana'>&#60;</span>
-                    <span id="set-contador-3-{{this}}" class='fuente-mediana'>0</span>
-                    <span class='fuente-mediana'>&#62;</span>
+
+                <div class='dos-textos-vertical'>
+                    <div><span id="estados_campo_TempActualUp{{this}}" class='fuente-grande'>0</span><span
+                            class='fuente-grande'>º</span></div>
+                    <div> <span class='fuente-mediana'>&#60;</span>
+                        <span id="estados_campo_SetTemperaturaUp{{this}}" class='fuente-mediana'>0</span>
+                        <span class='fuente-mediana'>º</span>
+                        <span class='fuente-mediana'>&#62;</span>
+                    </div>
                 </div>
-            </div>
-        </button>
+            </button>
+        </div>
+        <div class="btn-tiemp-{{this}}">
+            <button id="botonTime{{this}}" class="btn btn-extendido btn-danger"
+                onclick="clearInterval(intervaloPeticionIndex);window.location.href = '/dashboard/edicion?prensa={{this}}';">
+                <span id="estados_campo_TiempoActual{{this}}" class='fuente-grande'>0</span>
+                <span class='fuente-grande'>''</span>
+            </button>
+        </div>
+        <div class="btn-cont-1{{this}}">
+            <button id="botonCont1{{this}}" class="btn btn-extendido btn-danger" onclick="triple_click(event)">
+                <span id="estados_campo_Contador1{{this}}" class='fuente-grande'>-1</span>
+            </button>
+        </div>
+        <div class="btn-cont-2{{this}}">
+            <button id="botonCont2{{this}}" class="btn btn-extendido btn-danger" onclick="triple_click(event)">
+                <span id="estados_campo_Contador2{{this}}" class='fuente-grande'>-1</span>
+            </button>
+        </div>
+        <div class="btn-cont-3{{this}}">
+            <button id="botonCont3{{this}}" class="btn btn-extendido btn-danger"
+                onclick="mostrar_calculadora(botonCont3{{this}})">
+                <div class="dos-textos-vertical">
+                    <span id="estados_campo_Contador3{{this}}" class='fuente-grande'>-1</span>
+                    <div> <span class='fuente-mediana'>&#60;</span>
+                        <span id="set-contador-3-{{this}}" class='fuente-mediana'>0</span>
+                        <span class='fuente-mediana'>&#62;</span>
+                    </div>
+                </div>
+            </button>
+        </div>
+        <div class="saldos-{{this}}">
+            <button id="sumar_saldos{{this}}" onclick="cambiar_saldos(true,{{this}})"
+                class="btn btn-warning btn-cambiar-saldos">
+                <span class='fuente-grande'>+</span>
+
+            </button>
+            <button class="btn btn-dark btn-input-saldos">
+                <span class='fuente-grande' id="estado_saldos{{this}}">999</span>
+            </button>
+
+            <button id="restar_saldos{{this}}" onclick="cambiar_saldos(false,{{this}})"
+                class="btn btn-warning btn-cambiar-saldos">
+                <span class='fuente-grande'>-</span>
+            </button>
+
+            <button id="reset_contadores{{this}}" onclick="reset_contadores({{this}})"
+                class="btn btn-secondary btn-reset-all">
+                <span class='fuente-grande'>RST</span>
+
+            </button>
+        </div>
+        {{/times}}
+
     </div>
-    <div class="saldos-{{this}}">
-        <button id="sumar_saldos{{this}}" onclick="cambiar_saldos(true,{{this}})"
-            class="btn btn-warning btn-cambiar-saldos">
-            <span class='fuente-grande'>+</span>
-
-        </button>
-        <button class="btn btn-dark btn-input-saldos">
-            <span class='fuente-grande' id="estado_saldos{{this}}">999</span>
-        </button>
-
-        <button id="restar_saldos{{this}}" onclick="cambiar_saldos(false,{{this}})"
-            class="btn btn-warning btn-cambiar-saldos">
-            <span class='fuente-grande'>-</span>
-        </button>
-
-        <button id="reset_contadores{{this}}" onclick="reset_contadores({{this}})"
-            class="btn btn-secondary btn-reset-all">
-            <span class='fuente-grande'>RST</span>
-
-        </button>
-    </div>
-    {{/times}}
-
-</div>
 
 
 
-<script>
-    for (let i = 1; i <= 4; i++) {
-        for (let j = 1; j <= 2; j++) {
-            let btn = document.getElementById(`botonCont${j}${i}`)
-            if (btn) {
-                //btn.addEventListener('taphold', tapholdHandler, false)
-                $(`#botonCont${j}${i}`).bind("taphold",tapholdHandler)
+    <script>
+        for (let i = 1; i <= 4; i++) {
+            for (let j = 1; j <= 2; j++) {
+                let btn = document.getElementById(`botonCont${j}${i}`)
+                if (btn) {
+                    //btn.addEventListener('taphold', tapholdHandler, false)
+                    $(`#botonCont${j}${i}`).bind("taphold", tapholdHandler)
+                }
             }
         }
-    }
 
 
-    function tapholdHandler(event) {
-        if (event.target.tagName == 'BUTTON') {
-            reset_contador_individual(event.target)
+        function tapholdHandler(event) {
+            if (event.target.tagName == 'BUTTON') {
+                reset_contador_individual(event.target)
+            }
+            else {
+                reset_contador_individual(event.target.parentNode)
+            }
+            event.stopPropagation()
         }
-        else {
-            reset_contador_individual(event.target.parentNode)
+
+        let intervaloPeticionIndex = setInterval(() => {
+            $.ajax({
+                type: "POST",
+                url: "/plc/leer_temperaturas_contadores",
+                success: (data) => {
+                    mostrar_valores(data.data)
+                    mostrar_alertas(data.conectado, data.encender_extractor == 1)
+                },
+                error: (xhr) => {
+                    mostrar_alertas(true, false)
+                    console.log(xhr)
+                },
+                timeout: 400,
+            })
+        }, 500)
+
+        function mostrar_calculadora(id_boton) {
+            $("#modalCalculadora").modal('show')
+            idBotonSolicitaNumero = id_boton
         }
-        event.stopPropagation()
-    }
 
-    let intervaloPeticionIndex = setInterval(() => {
-        $.ajax({
-            type: "POST",
-            url: "/plc/leer_temperaturas_contadores",
-            success: (data) => {
-                mostrar_valores(data.data)
-                mostrar_alertas(data.conectado, data.encender_extractor == 1)
-            },
-            error: (xhr) => {
-                mostrar_alertas(true, false)
-                console.log(xhr)
-            },
-            timeout: 400,
-        })
-    }, 500)
+        function reset_contadores(id_prensa) {
+            $.ajax({
+                type: "POST",
+                data: {
+                    id: id_prensa,
+                },
+                url: "/plc/reset_contadores",
+                success: (data) => {
 
-    function mostrar_calculadora(id_boton) {
-        $("#modalCalculadora").modal('show')
-        idBotonSolicitaNumero = id_boton
-    }
+                },
+                error: (xhr) => {
 
-    function reset_contadores(id_prensa) {
-        $.ajax({
-            type: "POST",
-            data: {
-                id: id_prensa,
-            },
-            url: "/plc/reset_contadores",
-            success: (data) => {
+                },
+                timeout: 400,
+            })
+        }
 
-            },
-            error: (xhr) => {
+        function cambiar_saldos(sumar, id_prensa) {
+            $.ajax({
+                type: "POST",
+                data: {
+                    sumar: sumar,
+                    id: id_prensa,
+                },
+                url: "/plc/cambiar_saldos",
+                success: (data) => {
 
-            },
-            timeout: 400,
-        })
-    }
+                },
+                error: (xhr) => {
 
-    function cambiar_saldos(sumar, id_prensa) {
-        $.ajax({
-            type: "POST",
-            data: {
-                sumar: sumar,
-                id: id_prensa,
-            },
-            url: "/plc/cambiar_saldos",
-            success: (data) => {
-
-            },
-            error: (xhr) => {
-
-            },
-            timeout: 400,
-        })
-    }
+                },
+                timeout: 400,
+            })
+        }
 
 
-    let botones = ['botonTemp', 'botonTime', 'botonCont1', 'botonCont2', 'botonCont3']
+        let botones = ['botonTemp', 'botonTime', 'botonCont1', 'botonCont2', 'botonCont3']
 
-    relacion = {
-        temperatura_ok: 'botonTemp',
-        temperatura_actual: 'estados_campo_TempActual',
-        set_segundos_ciclo: 'estados_campo_TiempoActual',
-        set_temperatura: 'estados_campo_SetTemperatura',
-        set_contador_3: 'set-contador-3-',
-        saldos: 'estado_saldos',
+        relacion = {
+            temperatura_ok: 'botonTemp',
+            temperatura_actual: 'estados_campo_TempActual',
+            temperatura_actual_up: 'estados_campo_TempActualUp',
+            set_segundos_ciclo: 'estados_campo_TiempoActual',
+            set_temperatura: 'estados_campo_SetTemperatura',
+            set_temperatura_up: 'estados_campo_SetTemperaturaUp',
+            set_contador_3: 'set-contador-3-',
+            saldos: 'estado_saldos',
 
-        contador_1: 'estados_campo_Contador1',
-        contador_2: 'estados_campo_Contador2',
-        contador_3: 'estados_campo_Contador3',
-    }
+            contador_1: 'estados_campo_Contador1',
+            contador_2: 'estados_campo_Contador2',
+            contador_3: 'estados_campo_Contador3',
+        }
 
 
-    function mostrar_valores(data) {
-        for (let dato of data) {
-            for (let i = 1; i <= 4; i++) {
-                if (dato.name == 'encendida') {
-                    for (let boton of botones) {
-                        let _boton = document.getElementById(boton + i)
-                        if (_boton != null) {
-                            if (dato['valor_' + i] == 1) {
-                                _boton.className = _boton.className.replace('btn-danger', 'btn-primary')
+        function mostrar_valores(data) {
+            for (let dato of data) {
+                for (let i = 1; i <= 4; i++) {
+                    if (dato.name == 'encendida') {
+                        for (let boton of botones) {
+                            let _boton = document.getElementById(boton + i)
+                            if (_boton != null) {
+                                if (dato['valor_' + i] == 1) {
+                                    _boton.className = _boton.className.replace('btn-danger', 'btn-primary')
+                                }
+                                else {
+                                    _boton.className = _boton.className.replace('btn-primary', 'btn-danger')
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        let element = document.getElementById(relacion[dato.name] + i)
+                        if (element) {
+                            if (dato.name == 'temperatura_ok') {
+                                if (dato['valor_' + i] == 0) {
+                                    $(`#${relacion[dato.name] + "" + i}`).delay(50).fadeOut().fadeIn('slow')
+                                }
                             }
                             else {
-                                _boton.className = _boton.className.replace('btn-primary', 'btn-danger')
+                                element.innerText = dato['valor_' + i]
                             }
-                        }
-                    }
-                }
-                else {
-                    let element = document.getElementById(relacion[dato.name] + i)
-                    if (element) {
-                        if (dato.name == 'temperatura_ok') {
-                            if (dato['valor_' + i] == 0) {
-                                $(`#${relacion[dato.name] + "" + i}`).delay(50).fadeOut().fadeIn('slow')
-                            }
-                        }
-                        else {
-                            element.innerText = dato['valor_' + i]
                         }
                     }
                 }
             }
         }
-    }
 
 
-    const contadorClicks = {
+        const contadorClicks = {
 
-    }
-
-    function triple_click(e) {
-        e = e || window.event
-        let idTarget = e.target.id
-        if(!contadorClicks[idTarget]){
-            contadorClicks[idTarget] = 1
         }
-        else{
-            contadorClicks[idTarget] += 1
-            if(contadorClicks[idTarget] == 3){
-                reset_contador_individual(e.target)
-                contadorClicks[idTarget]=0
+
+        function triple_click(e) {
+            e = e || window.event
+            let idTarget = e.target.id
+            if (!contadorClicks[idTarget]) {
+                contadorClicks[idTarget] = 1
             }
+            else {
+                contadorClicks[idTarget] += 1
+                if (contadorClicks[idTarget] == 3) {
+                    reset_contador_individual(e.target)
+                    contadorClicks[idTarget] = 0
+                }
+            }
+
+            setTimeout(() => {
+                contadorClicks[idTarget] = 0
+            }, 5000)
         }
 
-        setTimeout(()=>{
-            contadorClicks[idTarget] = 0
-        },5000)
-    }
+        function reset_contador_individual(target) {
+            let reemplazo = target.id.replace('botonCont', '')
+            let prensa = reemplazo[1]
+            let contador = reemplazo[0]
 
-    function reset_contador_individual(target) {
-        let reemplazo = target.id.replace('botonCont', '')
-        let prensa = reemplazo[1]
-        let contador = reemplazo[0]
+            console.log(`prensa: ${prensa}  contador:${contador}`)
 
-        console.log(`prensa: ${prensa}  contador:${contador}`)
-
-        $.ajax({
-            type: "POST",
-            url: "/plc/set_contador",
-            data: {
-                id: prensa,
-                contador: contador,
-                valor: 0,
-            },
-            success: (data) => {
-            },
-            error: (xhr) => {
-                console.log(xhr)
-            },
-            timeout: 3000,
-        })
-    }
-</script>
+            $.ajax({
+                type: "POST",
+                url: "/plc/set_contador",
+                data: {
+                    id: prensa,
+                    contador: contador,
+                    valor: 0,
+                },
+                success: (data) => {
+                },
+                error: (xhr) => {
+                    console.log(xhr)
+                },
+                timeout: 3000,
+            })
+        }
+    </script>
