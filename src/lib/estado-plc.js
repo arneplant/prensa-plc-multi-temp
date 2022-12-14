@@ -716,10 +716,11 @@ timer(3000).then(async _ => {
 });
 
 const milisegundos_actualizacion = 2500
-
+let ciclo = 0
 setInterval(async () => {
     if (variables.conectando) return
     try {
+        ciclo += 1
 
         for (let i = 1; i <= variables.num_prensas; i++) {
             await leer_control_calentamiento(i)
@@ -881,9 +882,9 @@ async function leer_segundos_ciclo(i) {
     variables.set_segundos_ciclo['valor_' + i] = (await s7.leer_int_db(variables.bloque_activo, variables.set_segundos_ciclo['posicion_' + i])).datos
 }
 
-let ciclo = 0
+
 async function leer_temperaturas(i) {
-    ciclo += 1
+    
     if(ciclo % 2 === 0)
     {
         variables.temperatura_actual_up['valor_' + i] = Math.round(((await s7.leer_real_db(variables.bloque_activo, variables.temperatura_actual_up['posicion_' + i])).datos / 10.0)  * 10)/ 10
