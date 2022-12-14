@@ -883,7 +883,7 @@ async function leer_segundos_ciclo(i) {
 
 async function leer_temperaturas(i) {
     variables.temperatura_actual['valor_' + i] = Math.round((await s7.leer_real_db(variables.bloque_activo, variables.temperatura_actual['posicion_' + i])).datos * 100) / 100
-    variables.temperatura_actual_up['valor_' + i] = Math.round(((await s7.leer_long_db(variables.bloque_activo, variables.temperatura_actual_up['posicion_' + i])).datos / 10.0)  * 100)/ 100
+    variables.temperatura_actual_up['valor_' + i] = Math.round(((await s7.leer_real_db(variables.bloque_activo, variables.temperatura_actual_up['posicion_' + i])).datos / 10.0)  * 10)/ 10
     variables.set_temperatura_up['valor_' + i] = (await s7.leer_real_db(variables.bloque_activo, variables.set_temperatura_up['posicion_' + i])).datos
     variables.set_temperatura['valor_' + i] = (await s7.leer_real_db(variables.bloque_activo, variables.set_temperatura['posicion_' + i])).datos
     variables.temperatura_ok['valor_' + i] = (await s7.leer_bool_db(variables.bloque_activo, variables.temperatura_ok['posicion_' + i])).datos
